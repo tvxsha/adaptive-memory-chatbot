@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Adaptive Memory</title>
+  <style>
+    body {
+      width: 320px;
+      font-family: -apple-system, "Segoe UI", sans-serif;
+      padding: 12px;
+      margin: 0;
+    }
+    h1 {
+      font-size: 15px;
+      margin: 0 0 10px 0;
+    }
+    #status {
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 10px;
+    }
+    #memory-list {
+      max-height: 280px;
+      overflow-y: auto;
+    }
+    .memory-item {
+      border: 1px solid #e0e0e0;
+      border-radius: 6px;
+      padding: 6px 8px;
+      margin-bottom: 6px;
+      font-size: 12px;
+    }
+    .memory-item .category {
+      font-weight: 600;
+      color: #4a4ae0;
+      text-transform: uppercase;
+      font-size: 10px;
+    }
+    .memory-item .score {
+      float: right;
+      color: #999;
+    }
+    button {
+      width: 100%;
+      padding: 6px;
+      margin-top: 8px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Adaptive Memory</h1>
+  <div id="status">Loading memory for this conversation…</div>
+  <div id="memory-list"></div>
+  <button id="export-btn">Export snapshot (copy JSON)</button>
+  <script src="popup.js"></script>
+</body>
+</html>

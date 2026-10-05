@@ -48,7 +48,7 @@ def categorize(text: str) -> dict:
             model=GROQ_MODEL,
             messages=[{"role": "user", "content": CATEGORIZE_PROMPT.format(text=text)}],
             temperature=0,
-            max_tokens=100,
+            max_tokens=1024,
         )
         raw = response.choices[0].message.content.strip()
         # Strip markdown code fences if the model adds them anyway

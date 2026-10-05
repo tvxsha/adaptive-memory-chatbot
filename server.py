@@ -3,9 +3,17 @@
 Run with: uvicorn server:app --reload --port 8000
 Docs at:  http://localhost:8000/docs
 """
+import logging
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+
+# Show the memory pipeline's step-by-step logs in the uvicorn terminal.
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s %(levelname)s %(name)s: %(message)s",
+)
 
 from memory_engine.pipeline import process_message, get_store
 from memory_engine.retrieve import retrieve_relevant

@@ -1,0 +1,210 @@
+"""Edge-case tests for the full pipeline.
+
+These run completely offline: the Groq calls (categorize, check_relation) and
+the Hugging Face embedding call are replaced with deterministic fakes, so no
+API keys or internet are needed. What's being tested is the pipeline's own
+logic: guards, skipping, replacing, duplicate handling.
+"""
+import hashlib
+
+import numpy as np
+import pytest
+
+from memory_engine import contradiction, pipeline
+from memory_engine.store import MemoryStore
+
+
+# --------------------------------------------------------------------------
+# Fakes
+# --------------------------------------------------------------------------
+def fake_embed(text: str) -> np.ndarray:
+    """Deterministic bag-of-words embedding. Texts that share words get a high
+    cosine similarity; identical texts get exactly 1.0.
+    """
+    vec = np.zeros(64)
+    for word in text.lower().split():
+        idx = int(hashlib.md5(word.encode()).hexdigest(), 16) % 64
+        vec[idx] += 1.0
+    norm = np.linalg.norm(vec)
+    return vec if norm == 0 else vec / norm
+
+
+@pytest.fixture
+def engine(tmp_path, monkeypatch):
+    """A pipeline wired to a temp database and fake LLM/embedding calls.
+
+    Returns a small control object so each test can choose what the fake
+    categorizer and fake contradiction judge say.
+    """
+    store = MemoryStore(db_path=str(tmp_path / "test.db"))
+    monkeypatch.setattr(pipeline, "_store", store)
+
+    state = {
+        "category": "fact",
+        "relation": "consistent",
+        "categorize_inputs": [],
+        "relation_calls": 0,
+    }
+
+    def fake_categorize(text):
+        state["categorize_inputs"].append(text)
+        return {"category": state["category"], "confidence": 0.9}
+
+    def fake_check_relation(old_text, new_text):
+        state["relation_calls"] += 1
+        return {"relation": state["relation"], "reasoning": "fake judge"}
+
+    monkeypatch.setattr(pipeline, "categorize", fake_categorize)
+    monkeypatch.setattr(pipeline, "embed", fake_embed)
+    monkeypatch.setattr(contradiction, "embed", fake_embed)
+    monkeypatch.setattr(contradiction, "check_relation", fake_check_relation)
+
+    state["store"] = store
+    return state
+
+
+# --------------------------------------------------------------------------
+# Input guards
+# --------------------------------------------------------------------------
+@pytest.mark.parametrize("bad_input", ["", "   ", "\n\t  \n", None])
+def test_empty_or_whitespace_message_is_skipped(engine, bad_input):
+    result = pipeline.process_message("c1", bad_input)
+    assert result["action"] == "skip"
+    assert engine["categorize_inputs"] == []  # never reached the LLM
+    assert engine["store"].get_all("c1") == []
+
+
+def test_very_long_message_is_truncated_before_llm(engine):
+    long_text = "I live in Delhi. " * 1000  # ~17,000 chars
+    pipeline.process_message("c1", long_text)
+    sent = engine["categorize_inputs"][0]
+    assert len(sent) <= pipeline.MAX_MESSAGE_CHARS
+
+
+def test_surrounding_whitespace_is_stripped(engine):
+    pipeline.process_message("c1", "   I live in Delhi   \n")
+    assert engine["store"].get_all("c1")[0]["text"] == "I live in Delhi"
+
+
+# --------------------------------------------------------------------------
+# Categories
+# --------------------------------------------------------------------------
+def test_recent_chat_is_not_stored(engine):
+    engine["category"] = "recent_chat"
+    result = pipeline.process_message("c1", "haha okay cool")
+    assert result["action"] == "skip"
+    assert engine["store"].get_all("c1") == []
+
+
+def test_ambiguous_message_with_low_confidence_still_returns_valid_result(engine):
+    engine["category"] = "fact"
+    result = pipeline.process_message("c1", "maybe")
+    assert result["action"] in {"added", "skip"}
+
+
+# --------------------------------------------------------------------------
+# Duplicates, contradictions, updates
+# --------------------------------------------------------------------------
+def test_same_message_twice_is_stored_once(engine):
+    first = pipeline.process_message("c1", "My favorite food is biryani")
+    second = pipeline.process_message("c1", "My favorite food is biryani")
+    assert first["action"] == "added"
+    assert second["action"] == "skip"
+    assert len(engine["store"].get_all("c1")) == 1
+    # Exact duplicates shouldn't cost an LLM judgment call
+    assert engine["relation_calls"] == 0
+
+
+def test_contradiction_replaces_instead_of_duplicating(engine):
+    pipeline.process_message("c1", "I live in Delhi")
+    engine["relation"] = "contradicts"
+    result = pipeline.process_message("c1", "I live in Mumbai")
+
+    assert result["action"] == "replaced"
+    items = engine["store"].get_all("c1")
+    assert len(items) == 1
+    assert items[0]["text"] == "I live in Mumbai"
+
+
+def test_update_relation_also_replaces(engine):
+    pipeline.process_message("c1", "I live in Delhi")
+    engine["relation"] = "updates"
+    pipeline.process_message("c1", "I live in Mumbai")
+    assert [i["text"] for i in engine["store"].get_all("c1")] == ["I live in Mumbai"]
+
+
+def test_consistent_statements_are_both_kept(engine):
+    pipeline.process_message("c1", "I live in Delhi")
+    engine["relation"] = "consistent"
+    result = pipeline.process_message("c1", "I live in Delhi near the metro station")
+    assert result["action"] == "added"
+    assert len(engine["store"].get_all("c1")) == 2
+
+
+def test_unrelated_message_skips_the_llm_judge(engine):
+    pipeline.process_message("c1", "I live in Delhi")
+    result = pipeline.process_message("c1", "zebra quantum banana orbit")
+    assert result["action"] == "added"
+    assert engine["relation_calls"] == 0  # similarity too low to bother the LLM
+    assert len(engine["store"].get_all("c1")) == 2
+
+
+def test_conversations_do_not_leak_into_each_other(engine):
+    pipeline.process_message("c1", "I live in Delhi")
+    engine["relation"] = "contradicts"
+    result = pipeline.process_message("c2", "I live in Mumbai")
+    assert result["action"] == "added"  # nothing in c2 to contradict
+    assert len(engine["store"].get_all("c1")) == 1
+    assert len(engine["store"].get_all("c2")) == 1
+
+
+# --------------------------------------------------------------------------
+# LLM failure handling (categorize / check_relation fallbacks)
+# --------------------------------------------------------------------------
+class _FakeResponse:
+    def __init__(self, content):
+        self.choices = [type("C", (), {"message": type("M", (), {"content": content})()})()]
+
+
+class _FakeClient:
+    def __init__(self, content=None, raises=False):
+        self._content, self._raises = content, raises
+        self.chat = type("Chat", (), {"completions": self})()
+
+    def create(self, **kwargs):
+        if self._raises:
+            raise RuntimeError("simulated API failure")
+        return _FakeResponse(self._content)
+
+
+def test_categorize_falls_back_on_garbage_output(monkeypatch):
+    from memory_engine import categorize as cat
+    monkeypatch.setattr(cat, "_get_client", lambda: _FakeClient("not json at all"))
+    assert cat.categorize("hello")["category"] == "recent_chat"
+
+
+def test_categorize_falls_back_on_api_error(monkeypatch):
+    from memory_engine import categorize as cat
+    monkeypatch.setattr(cat, "_get_client", lambda: _FakeClient(raises=True))
+    assert cat.categorize("hello") == {"category": "recent_chat", "confidence": 0.0}
+
+
+def test_categorize_rejects_unknown_category(monkeypatch):
+    from memory_engine import categorize as cat
+    monkeypatch.setattr(
+        cat, "_get_client",
+        lambda: _FakeClient('{"category": "banana", "confidence": 0.9}'),
+    )
+    assert cat.categorize("hello")["category"] == "recent_chat"
+
+
+def test_categorize_handles_markdown_fenced_json(monkeypatch):
+    from memory_engine import categorize as cat
+    fenced = '```json\n{"category": "goal", "confidence": 0.8}\n```'
+    monkeypatch.setattr(cat, "_get_client", lambda: _FakeClient(fenced))
+    assert cat.categorize("I want to learn Spanish")["category"] == "goal"
+
+
+def test_check_relation_falls_back_to_unrelated_on_garbage(monkeypatch):
+    monkeypatch.setattr(contradiction, "_get_client", lambda: _FakeClient("???"))
+    assert contradiction.check_relation("a", "b")["relation"] == "unrelated"

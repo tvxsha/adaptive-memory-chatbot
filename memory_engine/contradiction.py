@@ -19,6 +19,10 @@ from memory_engine.embeddings import embed, cosine_similarity
 
 SIMILARITY_THRESHOLD = 0.55
 
+# Above this, a new statement is treated as a repeat of an existing memory
+# (skipped) rather than sent to the LLM for a contradiction judgment.
+DUPLICATE_THRESHOLD = 0.97
+
 _client = None
 
 
@@ -93,6 +97,16 @@ def resolve(new_text: str, existing_items: list[dict]) -> dict:
         return {"action": "add", "target_id": None, "reasoning": "no similar memory found"}
 
     best = candidates[0]
+
+    # Near-identical restatement of something already stored: don't spend an
+    # LLM call, and don't store a duplicate.
+    if best["similarity"] >= DUPLICATE_THRESHOLD:
+        return {
+            "action": "skip",
+            "target_id": best["id"],
+            "reasoning": f"near-duplicate of existing memory (similarity {best['similarity']:.2f})",
+        }
+
     result = check_relation(best["text"], new_text)
 
     if result["relation"] in ("contradicts", "updates"):

@@ -17,7 +17,10 @@ from groq import Groq
 from memory_engine.config import GROQ_API_KEY, GROQ_MODEL
 from memory_engine.embeddings import embed, cosine_similarity
 
-SIMILARITY_THRESHOLD = 0.55
+# Provisional: lowered from 0.55 after check_similarity.py showed real updates
+# (e.g. "I live in Delhi" -> "I just moved to Mumbai") scoring 0.39-0.54.
+# Re-tune with the full contradiction test set.
+SIMILARITY_THRESHOLD = 0.35
 
 # Above this, a new statement is treated as a repeat of an existing memory
 # (skipped) rather than sent to the LLM for a contradiction judgment.
@@ -42,12 +45,13 @@ New statement: "{new_text}"
 Respond with ONLY a JSON object:
 {{"relation": "<contradicts|updates|consistent|unrelated>", "reasoning": "<one short sentence>"}}
 
-- "contradicts": the new statement directly conflicts with the old one and both can't be true
-- "updates": the new statement is a natural progression/update of the old one (e.g. moved cities)
-- "consistent": both can be true together, no conflict
+- "contradicts": the new statement directly conflicts with the old one; both cannot be true
+- "updates": the old statement is NO LONGER TRUE because something changed (moved cities, quit a job, rescheduled). The new statement should replace the old one
+- "consistent": the old statement is STILL TRUE. This includes when the new statement only adds detail or elaborates on it (e.g. "I have a dog" followed by "I have a golden retriever named Max"), or is about a different person
 - "unrelated": they aren't about the same topic
-"""
 
+If the old statement could still be true after reading the new one, answer "consistent", not "updates".
+"""
 
 def find_candidates(new_text: str, existing_items: list[dict]) -> list[dict]:
     """existing_items: list of {"id", "text", "embedding"}.
@@ -73,7 +77,7 @@ def check_relation(old_text: str, new_text: str) -> dict:
                 "content": CONTRADICTION_PROMPT.format(old_text=old_text, new_text=new_text),
             }],
             temperature=0,
-            max_tokens=150,
+            max_tokens=1024,
         )
         raw = response.choices[0].message.content.strip()
         raw = raw.replace("```json", "").replace("```", "").strip()

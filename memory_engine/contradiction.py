@@ -11,7 +11,7 @@ TODO: your hand-built 20-30 conversation contradiction test set is exactly
 what should drive tuning SIMILARITY_THRESHOLD and the prompt below.
 """
 import json
-
+import logging
 from groq import Groq
 
 from memory_engine.config import GROQ_API_KEY, GROQ_MODEL
@@ -30,7 +30,7 @@ DUPLICATE_THRESHOLD = 0.97
 # rate-limit headroom.
 MAX_CANDIDATES_TO_JUDGE = 3
 _client = None
-
+logger = logging.getLogger("memory_engine.contradiction")
 
 def _get_client() -> Groq:
     global _client
@@ -91,14 +91,14 @@ def check_relation(old_text: str, new_text: str) -> dict:
             relation = "unrelated"
         return {"relation": relation, "reasoning": reasoning}
     except Exception as e:
-        print(f"[contradiction] defaulted to 'unrelated' due to: {e}")
-        return {"relation": "unrelated", "reasoning": ""}
-
+        logger.error("judge failed, defaulting to 'unrelated': %s", e)
+        return {"relation": "unrelated", "reasoning": "", "error": str(e)}
 
 def resolve(new_text: str, existing_items: list[dict]) -> dict:
     """Full pipeline: find similar memories and ask the judge about the best few.
     Returns {"action": "add" | "replace" | "skip", "target_id": id | None, "reasoning": str}.
     "skip" means the statement is a near-exact repeat of an existing memory.
+    If the LLM judge failed for any candidate, the result also has "llm_error".
 
     The top few candidates are judged (most similar first), not just the single
     best one: the memory a new statement actually updates is often NOT the most
@@ -120,14 +120,18 @@ def resolve(new_text: str, existing_items: list[dict]) -> dict:
             "reasoning": f"near-duplicate of existing memory (similarity {best['similarity']:.2f})",
         }
 
-    # Judge candidates in order and stop at the first one the new statement
-    # contradicts or updates.
     last_reasoning = "unrelated to existing memory"
+    judge_error = None
     for candidate in candidates[:MAX_CANDIDATES_TO_JUDGE]:
         result = check_relation(candidate["text"], new_text)
+        if result.get("error"):
+            judge_error = result["error"]
         if result["relation"] in ("contradicts", "updates"):
             return {"action": "replace", "target_id": candidate["id"], "reasoning": result["reasoning"]}
         if result["reasoning"]:
             last_reasoning = result["reasoning"]
 
-    return {"action": "add", "target_id": None, "reasoning": last_reasoning}
+    outcome = {"action": "add", "target_id": None, "reasoning": last_reasoning}
+    if judge_error:
+        outcome["llm_error"] = judge_error
+    return outcome

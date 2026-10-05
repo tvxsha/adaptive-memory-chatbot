@@ -8,13 +8,13 @@ TODO: consider few-shot examples in the prompt once you see real
 misclassifications during evaluation — this is the first thing worth tuning.
 """
 import json
-
+import logging
 from groq import Groq
 
 from memory_engine.config import GROQ_API_KEY, GROQ_MODEL, CATEGORIES
 
 _client = None
-
+logger = logging.getLogger("memory_engine.categorize")
 
 def _get_client() -> Groq:
     global _client
@@ -60,5 +60,5 @@ def categorize(text: str) -> dict:
             category = "recent_chat"
         return {"category": category, "confidence": confidence}
     except Exception as e:
-        print(f"[categorize] fell back to 'recent_chat' due to: {e}")
-        return {"category": "recent_chat", "confidence": 0.0}
+        logger.error("categorize failed, falling back to 'recent_chat': %s", e)
+        return {"category": "recent_chat", "confidence": 0.0, "error": str(e)}

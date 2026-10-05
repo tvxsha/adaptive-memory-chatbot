@@ -186,7 +186,10 @@ def test_categorize_falls_back_on_garbage_output(monkeypatch):
 def test_categorize_falls_back_on_api_error(monkeypatch):
     from memory_engine import categorize as cat
     monkeypatch.setattr(cat, "_get_client", lambda: _FakeClient(raises=True))
-    assert cat.categorize("hello") == {"category": "recent_chat", "confidence": 0.0}
+    result = cat.categorize("hello")
+    assert result["category"] == "recent_chat"
+    assert result["confidence"] == 0.0
+    assert "simulated API failure" in result["error"]
 
 
 def test_categorize_rejects_unknown_category(monkeypatch):
@@ -256,3 +259,34 @@ def test_resolve_stops_after_max_candidates(monkeypatch):
 
     assert result["action"] == "add"
     assert len(judged) == contradiction.MAX_CANDIDATES_TO_JUDGE
+# --------------------------------------------------------------------------
+# LLM failures must be visible, not silent
+# --------------------------------------------------------------------------
+def test_categorizer_failure_returns_error_and_stores_nothing(engine, monkeypatch):
+    monkeypatch.setattr(
+        pipeline, "categorize",
+        lambda text: {"category": "recent_chat", "confidence": 0.0, "error": "boom"},
+    )
+    result = pipeline.process_message("c1", "I live in Delhi")
+    assert result["action"] == "error"
+    assert "boom" in result["reason"]
+    assert engine["store"].get_all("c1") == []
+
+
+def test_judge_failure_is_flagged_but_memory_is_still_stored(engine, monkeypatch):
+    pipeline.process_message("c1", "I live in Delhi")
+    monkeypatch.setattr(
+        contradiction, "check_relation",
+        lambda old, new: {"relation": "unrelated", "reasoning": "", "error": "judge down"},
+    )
+    result = pipeline.process_message("c1", "I live in Delhi near the metro station")
+    assert result["action"] == "added"
+    assert result["llm_error"] == "judge down"
+    assert len(engine["store"].get_all("c1")) == 2
+
+
+def test_check_relation_returns_error_field_on_api_failure(monkeypatch):
+    monkeypatch.setattr(contradiction, "_get_client", lambda: _FakeClient(raises=True))
+    result = contradiction.check_relation("a", "b")
+    assert result["relation"] == "unrelated"
+    assert "simulated API failure" in result["error"]

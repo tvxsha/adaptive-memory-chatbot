@@ -54,6 +54,13 @@ def process_message(conversation_id: str, text: str) -> dict:
     # --- Step 1: categorize ---------------------------------------------
     category_result = categorize(text)
     category = category_result["category"]
+    if category_result.get("error"):
+        logger.error("[%s] categorizer failed, message NOT processed", conversation_id)
+        return {
+            "action": "error",
+            "category": None,
+            "reason": f"categorize failed: {category_result['error']}",
+        }
     logger.info(
         "[%s] categorized as %s (confidence %.2f): %r",
         conversation_id, category, category_result["confidence"], text[:80],
@@ -94,9 +101,13 @@ def process_message(conversation_id: str, text: str) -> dict:
         action = "added"
 
     logger.info("[%s] memory %s", conversation_id, action)
-    return {
+    result = {
         "action": action,
         "category": category,
         "score": score,
         "reasoning": decision["reasoning"],
     }
+    if decision.get("llm_error"):
+        logger.warning("[%s] stored without a working contradiction check", conversation_id)
+        result["llm_error"] = decision["llm_error"]
+    return result

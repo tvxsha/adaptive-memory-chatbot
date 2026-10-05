@@ -25,7 +25,10 @@ SIMILARITY_THRESHOLD = 0.35
 # Above this, a new statement is treated as a repeat of an existing memory
 # (skipped) rather than sent to the LLM for a contradiction judgment.
 DUPLICATE_THRESHOLD = 0.97
-
+# How many of the most similar memories get sent to the LLM judge per new
+# message. Each one is a separate Groq call, so this trades accuracy for
+# rate-limit headroom.
+MAX_CANDIDATES_TO_JUDGE = 3
 _client = None
 
 
@@ -93,8 +96,14 @@ def check_relation(old_text: str, new_text: str) -> dict:
 
 
 def resolve(new_text: str, existing_items: list[dict]) -> dict:
-    """Full pipeline: find the best candidate and classify the relation.
+    """Full pipeline: find similar memories and ask the judge about the best few.
     Returns {"action": "add" | "replace" | "skip", "target_id": id | None, "reasoning": str}.
+    "skip" means the statement is a near-exact repeat of an existing memory.
+
+    The top few candidates are judged (most similar first), not just the single
+    best one: the memory a new statement actually updates is often NOT the most
+    similar one (e.g. "I just moved to Mumbai" can look more like "I booked a
+    flight to Goa" than like "I live in Delhi and work as a data analyst").
     """
     candidates = find_candidates(new_text, existing_items)
     if not candidates:
@@ -111,10 +120,14 @@ def resolve(new_text: str, existing_items: list[dict]) -> dict:
             "reasoning": f"near-duplicate of existing memory (similarity {best['similarity']:.2f})",
         }
 
-    result = check_relation(best["text"], new_text)
+    # Judge candidates in order and stop at the first one the new statement
+    # contradicts or updates.
+    last_reasoning = "unrelated to existing memory"
+    for candidate in candidates[:MAX_CANDIDATES_TO_JUDGE]:
+        result = check_relation(candidate["text"], new_text)
+        if result["relation"] in ("contradicts", "updates"):
+            return {"action": "replace", "target_id": candidate["id"], "reasoning": result["reasoning"]}
+        if result["reasoning"]:
+            last_reasoning = result["reasoning"]
 
-    if result["relation"] in ("contradicts", "updates"):
-        return {"action": "replace", "target_id": best["id"], "reasoning": result["reasoning"]}
-    if result["relation"] == "consistent":
-        return {"action": "add", "target_id": None, "reasoning": result["reasoning"]}
-    return {"action": "add", "target_id": None, "reasoning": "unrelated to existing memory"}
+    return {"action": "add", "target_id": None, "reasoning": last_reasoning}

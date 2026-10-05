@@ -208,3 +208,51 @@ def test_categorize_handles_markdown_fenced_json(monkeypatch):
 def test_check_relation_falls_back_to_unrelated_on_garbage(monkeypatch):
     monkeypatch.setattr(contradiction, "_get_client", lambda: _FakeClient("???"))
     assert contradiction.check_relation("a", "b")["relation"] == "unrelated"
+
+
+# --------------------------------------------------------------------------
+# Judging more than the single best candidate
+# --------------------------------------------------------------------------
+def test_resolve_judges_second_best_candidate_too(monkeypatch):
+    """The memory a statement updates is not always the most similar one.
+    Judging only the top match would miss this update (found in the smoke test:
+    "I just moved to Mumbai" matched a Goa flight better than the Delhi fact).
+    """
+    monkeypatch.setattr(contradiction, "embed", lambda t: np.array([1.0, 0.0]))
+    items = [
+        {"id": "decoy", "text": "I booked a flight to Goa", "embedding": np.array([0.9, 0.436])},
+        {"id": "target", "text": "I live in Delhi", "embedding": np.array([0.6, 0.8])},
+    ]
+    judged = []
+
+    def judge(old, new):
+        judged.append(old)
+        if "Delhi" in old:
+            return {"relation": "updates", "reasoning": "moved cities"}
+        return {"relation": "consistent", "reasoning": "different topic"}
+
+    monkeypatch.setattr(contradiction, "check_relation", judge)
+    result = contradiction.resolve("I just moved to Mumbai", items)
+
+    assert result["action"] == "replace"
+    assert result["target_id"] == "target"
+    assert judged == ["I booked a flight to Goa", "I live in Delhi"]
+
+
+def test_resolve_stops_after_max_candidates(monkeypatch):
+    monkeypatch.setattr(contradiction, "embed", lambda t: np.array([1.0, 0.0]))
+    items = [
+        {"id": f"m{i}", "text": f"memory {i}", "embedding": np.array([0.9 - i * 0.05, 0.4])}
+        for i in range(6)
+    ]
+    judged = []
+
+    def judge(old, new):
+        judged.append(old)
+        return {"relation": "consistent", "reasoning": "fine"}
+
+    monkeypatch.setattr(contradiction, "check_relation", judge)
+    result = contradiction.resolve("something new", items)
+
+    assert result["action"] == "add"
+    assert len(judged) == contradiction.MAX_CANDIDATES_TO_JUDGE

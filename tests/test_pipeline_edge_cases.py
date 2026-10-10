@@ -290,3 +290,28 @@ def test_check_relation_returns_error_field_on_api_failure(monkeypatch):
     result = contradiction.check_relation("a", "b")
     assert result["relation"] == "unrelated"
     assert "simulated API failure" in result["error"]
+
+
+def test_recent_chat_is_skipped_by_default(tmp_path, monkeypatch):
+    from memory_engine import pipeline, config
+    from memory_engine.store import MemoryStore
+    monkeypatch.setattr(pipeline, "_store", MemoryStore(db_path=str(tmp_path / "t.db")))
+    monkeypatch.setattr(pipeline, "categorize", lambda t: {"category": "recent_chat", "confidence": 0.9})
+    monkeypatch.setattr(config, "STORE_RECENT_CHAT", False)
+    result = pipeline.process_message("c", "haha yeah totally")
+    assert result["action"] == "skip"
+    assert pipeline.get_store().get_all("c") == []
+
+
+def test_recent_chat_is_stored_when_enabled(tmp_path, monkeypatch):
+    import numpy as np
+    from memory_engine import pipeline, config
+    from memory_engine.store import MemoryStore
+    monkeypatch.setattr(pipeline, "_store", MemoryStore(db_path=str(tmp_path / "t.db")))
+    monkeypatch.setattr(pipeline, "categorize", lambda t: {"category": "recent_chat", "confidence": 0.9})
+    monkeypatch.setattr(pipeline, "embed", lambda t: np.ones(4) / 2)
+    monkeypatch.setattr(config, "STORE_RECENT_CHAT", True)
+    result = pipeline.process_message("c", "haha yeah totally")
+    assert result["action"] == "added"
+    items = pipeline.get_store().get_all("c")
+    assert len(items) == 1 and items[0]["category"] == "recent_chat"

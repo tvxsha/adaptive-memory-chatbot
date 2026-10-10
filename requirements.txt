@@ -11,3 +11,4 @@ seaborn>=0.13.2
 jupyter==1.0.0
 pydantic==2.9.2
 pytest==8.3.3
+fastembed>=0.3.0

@@ -1,11 +1,18 @@
 // Content script — runs on each chatbot's page. Its job: detect new chat
 // turns as they appear and send them to the background worker.
 //
+// Only the USER's own messages are captured: those are where facts,
+// preferences, goals and decisions come from. The assistant's replies are long,
+// stream in token by token, and would mostly be stored as noise.
+//
 // IMPORTANT: each site's DOM structure is different and changes over time.
-// The selectors below are PLACEHOLDERS — open devtools on each site
-// (ChatGPT, Claude, Gemini), inspect the message containers, and replace
-// these with real selectors. This file is the main "glue" work you'll need
-// to do to get a working demo.
+//   * chatgpt.com / chat.openai.com : selector below is the commonly used one,
+//     verify it in devtools on your own account.
+//   * claude.ai / gemini.google.com  : NOT filled in yet. Open devtools, inspect
+//     a user message, and put a real selector in SITE_SELECTORS.
+
+const CAPTURE_ROLES = ["user"];
+const SETTLE_MS = 800; // wait a moment so a message's text is complete
 
 const SITE_SELECTORS = {
   "chat.openai.com": { messageContainer: "[data-message-author-role]", role: "data-message-author-role" },
@@ -17,8 +24,9 @@ const SITE_SELECTORS = {
 };
 
 function getConversationId() {
-  // Simplest option: use the page URL as the conversation id. Good enough
-  // to start with — refine if you need something more stable.
+  // Simplest option: use the page URL as the conversation id. A brand-new chat
+  // changes its URL after the first message, so a fresh chat can end up split
+  // across two ids. The popup's Conversation box can be used to line them up.
   return window.location.href;
 }
 
@@ -37,7 +45,9 @@ function sendMessageToBackground(role, text) {
       text: text.trim(),
     },
     (response) => {
-      if (response && response.ok) {
+      if (chrome.runtime.lastError) {
+        console.warn("[adaptive-memory] background worker not reachable:", chrome.runtime.lastError.message);
+      } else if (response && response.ok) {
         console.debug("[adaptive-memory] processed:", response.data);
       } else {
         console.warn("[adaptive-memory] failed to process message:", response && response.error);
@@ -59,9 +69,14 @@ function observeNewMessages() {
     const nodes = document.querySelectorAll(config.messageContainer);
     nodes.forEach((node) => {
       if (seen.has(node)) return;
-      seen.add(node);
       const role = config.role ? node.getAttribute(config.role) : "user";
-      sendMessageToBackground(role, node.innerText);
+      if (!CAPTURE_ROLES.includes(role)) {
+        seen.add(node); // assistant message: ignore it for good
+        return;
+      }
+      seen.add(node);
+      // Read the text after a short delay, once it has settled.
+      setTimeout(() => sendMessageToBackground(role, node.innerText), SETTLE_MS);
     });
   };
 

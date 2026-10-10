@@ -1,25 +1,36 @@
-"""Embedding wrapper using the Hugging Face Inference API (hosted), instead
-of running sentence-transformers/PyTorch locally. This keeps the install
-lightweight — no compiled PyTorch dependency — at the cost of needing an
-internet connection and a free HF token for every embedding call.
+"""Embedding wrapper.
 
-If you'd rather run embeddings fully offline/locally (e.g. once everyone's
-on Python 3.12 and torch installs cleanly), swap this file for a version
-using `sentence-transformers.SentenceTransformer` instead — the public
-functions below (embed, embed_batch, cosine_similarity) can keep the same
-signatures so nothing else in memory_engine needs to change.
+Default: run all-MiniLM-L6-v2 LOCALLY with fastembed (ONNX, no PyTorch needed,
+free, no rate limits; the ~90 MB model is downloaded once on first use).
+Fallback: the Hugging Face Inference API, used only if fastembed is not
+installed. The public functions (embed, embed_batch, cosine_similarity) are the
+same either way, so nothing else in memory_engine needs to change.
 """
 import numpy as np
-from huggingface_hub import InferenceClient
 
 from memory_engine.config import EMBEDDING_MODEL, HF_TOKEN
 
+try:
+    from fastembed import TextEmbedding
+except ImportError:  # fall back to the hosted API
+    TextEmbedding = None
+
+_local_model = None
 _client = None
 
 
-def _get_client() -> InferenceClient:
+def _get_local_model():
+    global _local_model
+    if _local_model is None:
+        _local_model = TextEmbedding(model_name=EMBEDDING_MODEL)
+    return _local_model
+
+
+def _get_client():
     global _client
     if _client is None:
+        from huggingface_hub import InferenceClient
+
         _client = InferenceClient(model=EMBEDDING_MODEL, token=HF_TOKEN)
     return _client
 
@@ -31,9 +42,11 @@ def _normalize(vec: np.ndarray) -> np.ndarray:
 
 def embed(text: str) -> np.ndarray:
     """Return a single normalized embedding vector for a piece of text."""
-    client = _get_client()
-    result = client.feature_extraction(text, normalize=True)
-    vec = np.array(result, dtype=np.float32)
+    if TextEmbedding is not None:
+        vec = np.array(next(iter(_get_local_model().embed([text]))), dtype=np.float32)
+    else:
+        result = _get_client().feature_extraction(text, normalize=True)
+        vec = np.array(result, dtype=np.float32)
     # Some models return per-token embeddings (2D) instead of a single
     # pooled vector — mean-pool across tokens if so.
     if vec.ndim == 2:

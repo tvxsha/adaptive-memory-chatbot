@@ -11,7 +11,7 @@ __pycache__/
 data/raw/
 data/*.json
 !data/.gitkeep
-
+evaluation/results/dryrun/
 # Jupyter
 .ipynb_checkpoints/
 
@@ -27,3 +27,6 @@ Thumbs.db
 extension/*.zip
 *.pem
 *.crx
+# Generated evaluation output
+evaluation/results/
+evaluation/figures/

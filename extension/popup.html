@@ -4,55 +4,109 @@
   <meta charset="utf-8" />
   <title>Adaptive Memory</title>
   <style>
+    :root {
+      --bg: #ffffff;
+      --text: #1c1c28;
+      --muted: #6b6b80;
+      --line: #e3e3ec;
+      --accent: #4a4ae0;
+      --added: #1a8f4c;
+      --replaced: #c27803;
+      --skip: #6b6b80;
+      --error: #c62828;
+    }
+    * { box-sizing: border-box; }
     body {
-      width: 320px;
-      font-family: -apple-system, "Segoe UI", sans-serif;
-      padding: 12px;
+      width: 380px;
       margin: 0;
+      padding: 12px 14px 14px;
+      font: 13px/1.4 -apple-system, "Segoe UI", sans-serif;
+      color: var(--text);
+      background: var(--bg);
     }
-    h1 {
-      font-size: 15px;
-      margin: 0 0 10px 0;
+    header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+    h1 { font-size: 15px; margin: 0; flex: 1; }
+    h2 { font-size: 12px; margin: 14px 0 6px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
+    .dot { width: 9px; height: 9px; border-radius: 50%; background: #bbb; display: inline-block; }
+    .dot.up { background: var(--added); }
+    .dot.down { background: var(--error); }
+    #server-text { font-size: 11px; color: var(--muted); }
+    label { display: block; font-size: 11px; color: var(--muted); margin-bottom: 3px; }
+    input[type=text], textarea {
+      width: 100%; padding: 6px 8px; font: inherit;
+      border: 1px solid var(--line); border-radius: 6px;
     }
-    #status {
-      font-size: 12px;
-      color: #666;
-      margin-bottom: 10px;
-    }
-    #memory-list {
-      max-height: 280px;
-      overflow-y: auto;
-    }
-    .memory-item {
-      border: 1px solid #e0e0e0;
-      border-radius: 6px;
-      padding: 6px 8px;
-      margin-bottom: 6px;
-      font-size: 12px;
-    }
-    .memory-item .category {
-      font-weight: 600;
-      color: #4a4ae0;
-      text-transform: uppercase;
-      font-size: 10px;
-    }
-    .memory-item .score {
-      float: right;
-      color: #999;
-    }
+    textarea { resize: vertical; min-height: 52px; }
     button {
-      width: 100%;
-      padding: 6px;
-      margin-top: 8px;
-      cursor: pointer;
+      padding: 6px 10px; font: inherit; cursor: pointer;
+      border: 1px solid var(--line); border-radius: 6px; background: #f5f5fa;
     }
+    button.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+    button:disabled { opacity: .5; cursor: default; }
+    button.danger { color: var(--error); }
+    .row { display: flex; gap: 6px; margin-top: 6px; }
+    .row > input { flex: 1; }
+    .actions { display: flex; gap: 6px; margin-top: 12px; }
+    .actions button { flex: 1; }
+    #result { margin-top: 8px; font-size: 12px; min-height: 18px; }
+    .chip {
+      display: inline-block; padding: 1px 7px; margin-right: 6px; border-radius: 10px;
+      font-size: 10px; font-weight: 700; text-transform: uppercase; color: #fff;
+    }
+    .chip.added { background: var(--added); }
+    .chip.replaced { background: var(--replaced); }
+    .chip.skip { background: var(--skip); }
+    .chip.error { background: var(--error); }
+    .why { color: var(--muted); }
+    .warn { color: var(--replaced); }
+    #memory-list, #retrieved { max-height: 190px; overflow-y: auto; }
+    .memory-item {
+      border: 1px solid var(--line); border-radius: 6px;
+      padding: 5px 8px; margin-bottom: 5px; font-size: 12px;
+    }
+    .memory-item.flash { border-color: var(--accent); background: #eeeefc; }
+    .memory-item .category {
+      font-weight: 700; color: var(--accent); text-transform: uppercase; font-size: 10px;
+    }
+    .memory-item .meta { float: right; color: #999; font-size: 11px; }
+    .empty { color: var(--muted); font-size: 12px; padding: 4px 0; }
+    #status { margin-top: 10px; font-size: 11px; color: var(--muted); min-height: 14px; }
   </style>
 </head>
 <body>
-  <h1>Adaptive Memory</h1>
-  <div id="status">Loading memory for this conversation…</div>
+  <header>
+    <h1>Adaptive Memory</h1>
+    <span id="server-dot" class="dot"></span>
+    <span id="server-text">checking server…</span>
+  </header>
+
+  <label for="conv-id">Conversation</label>
+  <input id="conv-id" type="text" spellcheck="false" />
+
+  <h2>1. Tell it something</h2>
+  <textarea id="msg" placeholder="e.g. I live in Delhi and I work as a data analyst."></textarea>
+  <div class="row">
+    <button id="add-btn" class="primary">Add to memory</button>
+  </div>
+  <div id="result"></div>
+
+  <h2>2. What it remembers <span id="count"></span></h2>
   <div id="memory-list"></div>
-  <button id="export-btn">Export snapshot (copy JSON)</button>
+
+  <h2>3. Ask what is relevant</h2>
+  <div class="row" style="margin-top:0">
+    <input id="query" type="text" placeholder="e.g. where does the user live?" />
+    <button id="ask-btn">Retrieve</button>
+  </div>
+  <div id="retrieved"></div>
+
+  <div class="actions">
+    <button id="copy-prompt-btn" title="Paste into any chatbot to carry your memory over">Copy as prompt</button>
+    <button id="export-btn">Copy JSON</button>
+    <button id="clear-btn" class="danger">Clear</button>
+  </div>
+  <div id="status"></div>
+
   <script src="popup.js"></script>
 </body>
 </html>

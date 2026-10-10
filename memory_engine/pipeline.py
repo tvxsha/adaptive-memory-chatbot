@@ -10,6 +10,7 @@ from memory_engine.categorize import categorize
 from memory_engine.score import score_importance
 from memory_engine.contradiction import resolve
 from memory_engine.embeddings import embed
+from memory_engine import config
 from memory_engine.store import MemoryStore
 
 logger = logging.getLogger("memory_engine.pipeline")
@@ -69,8 +70,15 @@ def process_message(conversation_id: str, text: str) -> dict:
     # recent_chat items aren't worth long-term storage or contradiction
     # checking — skip straight through.
     if category == "recent_chat":
-        logger.info("[%s] skipped: recent_chat filler", conversation_id)
-        return {"action": "skip", "category": category, "reason": "recent_chat filler"}
+        if not config.STORE_RECENT_CHAT:
+            logger.info("[%s] skipped: recent_chat filler", conversation_id)
+            return {"action": "skip", "category": category, "reason": "recent_chat filler"}
+        # Keep it, but cheaply: low score, no contradiction check (no extra LLM call).
+        score = score_importance(text, category)
+        store.add(conversation_id, text, category, score, embed(text))
+        logger.info("[%s] recent_chat stored (STORE_RECENT_CHAT on)", conversation_id)
+        return {"action": "added", "category": category, "score": score,
+                "reasoning": "recent_chat kept (no contradiction check)"}
 
     # --- Step 2: score + embed ------------------------------------------
     score = score_importance(text, category)

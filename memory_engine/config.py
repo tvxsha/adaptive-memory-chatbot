@@ -9,7 +9,9 @@ GROQ_MODEL = os.getenv("GROQ_MODEL", "openai/gpt-oss-120b")
 HF_TOKEN = os.getenv("HF_TOKEN", "")
 EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "sentence-transformers/all-MiniLM-L6-v2")
 MEMORY_DB_PATH = os.getenv("MEMORY_DB_PATH", "./data/memory.db")
-
+# By default casual filler ("recent_chat") is not stored. Set STORE_RECENT_CHAT=1
+# to keep it (at a low importance score, without a contradiction check).
+STORE_RECENT_CHAT = os.getenv("STORE_RECENT_CHAT", "0").lower() in ("1", "true", "yes")
 # The memory categories described in the project objectives
 CATEGORIES = [
     "fact",

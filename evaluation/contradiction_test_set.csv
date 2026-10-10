@@ -1,0 +1,45 @@
+conversation_id,old_text,new_text,label
+conv-26,"Yeah, I made it in pottery class yesterday. I love it! Pottery's so relaxing and creative. Have you tried it yet?","I haven't done pottery yet, but I'm game for trying new art. I might try it sometime! Check out this piece I made!",contradicts
+conv-26,"Thanks, Caroline! Painting's a fun way to express my feelings and get creative. It's a great way to relax after a long day.","Thanks, Caroline! I painted it because it was calming. I've done an abstract painting too, take a look! I love how art lets us get our emotions out.",consistent
+conv-26,That photo is stunning! So glad you bonded over our love of nature. Last Friday I went to a council meeting for adoption. It was inspiring and emotional - so many people wanted to create loving homes for children in need. It made me even more determined to adopt.,"Thanks so much, Melanie! It's beautiful! It really brings home how much love's in families - both blood and the ones we choose. I hope to build my own family and put a roof over kids who haven't had that before. For me, adoption is a way of giving back and showing love and acceptance.",consistent
+conv-26,"Thanks, Mel! My goal is to give kids a loving home. I'm truly grateful for all the support I've got from friends and mentors. Now the hard work starts to turn my dream into a reality. And here's one of the adoption agencies I'm looking into. It's a lot to take in, but I'm feeling hopeful and optimistic.","Thanks, Melanie! I'm stoked to start this new chapter. It's been a dream to adopt and provide a safe, loving home for kids who need it. Do you have any experience with adoption, or know anyone who's gone through the process?",consistent
+conv-26,Thanks Mel! I'm going to a transgender conference this month. I'm so excited to meet other people in the community and learn more about advocacy. It's gonna be great!,"Hey Mel, great to chat with you again! So much has happened since we last spoke - I went to an LGBTQ conference two days ago and it was really special. I got the chance to meet and connect with people who've gone through similar journeys. It was such a welcoming environment and I felt totally accepted. I'm really thankful for this amazing community - it's shown me how important it is to fight for trans rights and spread awareness.",updates
+conv-26,"Thanks, Melanie! Your kind words mean a lot.","Thanks, Melanie. It means a lot to share this with you.",consistent
+conv-26,"Wow, Caroline, that painting is awesome! Those colors are so vivid and the whole thing looks really unified. What inspired you?","Wow, Caroline! This painting is awesome. Love the red and blue. What gave you the idea?",consistent
+conv-26,"Thanks, Caroline! Appreciate your kind words. Looking forward to more happy years. Our family and moments make it all worth it.","Thanks, Caroline! I'm really lucky to have my family; they bring so much joy and love.",consistent
+conv-26,"Hey Mel, great to chat with you again! So much has happened since we last spoke - I went to an LGBTQ conference two days ago and it was really special. I got the chance to meet and connect with people who've gone through similar journeys. It was such a welcoming environment and I felt totally accepted.",Hey Mel! A lot's happened since we last chatted - I just joined a new LGBTQ activist group last Tues. I'm meeting so many cool people who are as passionate as I am about rights and community support.,consistent
+conv-26,"Thanks, Caroline! We both helped with the painting - it was great bonding over it and chatting about nature. We found these lovely flowers. Appreciating the small things in life, too.","Wow, Caroline, that's so nice! The colors are so bright and the flowers are so pretty. Art is such a source of joy.",consistent
+conv-26,"Wow, Mel, I'm so stoked for you that art is helping you express yourself and bring you joy! Keep it up!","Thanks, Mel! Art gives me so much joy. It helps me show my feelings and freeze gorgeous moments, like a bouquet of flowers.",consistent
+conv-26,"Yeah, Caroline. Totally agree. They're my biggest motivation and support.","Glad you agree, Caroline. Appreciate the support of those close to me. Their encouragement made me who I am.",consistent
+conv-26,"Wow, Caroline! You've gained so much from your own experience. Your passion and hard work to help others is awesome. Keep it up, you're making a big impact!","I'm so happy for you, Caroline. You found your true self and now you're helping others. You're so inspiring!",consistent
+conv-26,"It was amazing, Caroline. The day was full of love and joy. Everyone we love was there to celebrate us - it was really special.","Hey Caroline! Last night was amazing! We celebrated my daughter's birthday with a concert surrounded by music, joy and the warm summer breeze.",unrelated
+conv-26,"Wow, Caroline! All those colors are incredible and the story it tells is so inspiring.","Wow, Caroline, that's so nice! The colors are so bright and the flowers are so pretty. Art is such a source of joy.",consistent
+conv-26,"Thanks, Caroline! I'm excited to see where pottery takes me. Anything coming up you're looking forward to?","Sure thing, Melanie! Can't wait to see your pottery project. I'm happy you found something that makes you happy. Show me when you can!",consistent
+conv-26,Hey Caroline! Good to see you! I'm swamped with the kids & work. What's up with you? Anything new?,Hey Caroline! Good to talk to you again. What's up? Anything new since last time?,consistent
+conv-26,"Wow, Caroline! It really conveys unity and strength - such a gorgeous piece! My kids and I just finished another painting like our last one.","Wow, Caroline, that's so nice! The colors are so bright and the flowers are so pretty. Art is such a source of joy.",consistent
+conv-26,That photo is stunning! So glad you bonded over our love of nature. Last Friday I went to a council meeting for adoption. It was inspiring and emotional - so many people wanted to create loving homes for children in need.,"Wow, Caroline! All those colors are incredible and the story it tells is so inspiring.",unrelated
+conv-26,"Yeah, I painted that lake sunrise last year! It's special to me.","Gonna continue my edu and check out career options, which is pretty exciting!",unrelated
+synthetic,I work at a hospital.,I left my hospital job last month.,updates
+synthetic,I am preparing for the Java exam.,I have decided to drop Java and focus on Python instead.,updates
+synthetic,My budget is 5000 rupees.,I can spend up to 8000 rupees now.,updates
+synthetic,I am studying computer science.,I switched my major to design.,updates
+synthetic,I plan to apply for a master's degree.,I submitted my master's application yesterday.,updates
+synthetic,I have never travelled outside India.,I visited Singapore last summer.,contradicts
+synthetic,I am allergic to peanuts.,I can safely eat peanuts.,contradicts
+synthetic,My appointment is on Monday.,"My appointment is on Thursday, not Monday.",contradicts
+synthetic,I have two siblings.,I am an only child.,contradicts
+synthetic,I do not own a car.,I bought a car last week.,contradicts
+synthetic,I work remotely every day.,I now go to the office every weekday.,updates
+synthetic,I prefer tea over coffee.,"These days, I usually choose coffee instead of tea.",updates
+synthetic,My phone has 64 GB of storage.,I upgraded to a phone with 256 GB of storage.,updates
+synthetic,I am preparing for the Java exam.,I finished my Java exam yesterday.,updates
+synthetic,I am training for a 5 km run.,I completed my first 10 km race.,updates
+synthetic,My sister lives in Pune.,I prefer tea to coffee.,unrelated
+synthetic,I enjoy painting landscapes.,My favourite programming language is Python.,unrelated
+synthetic,The meeting is scheduled for Tuesday.,I bought a new backpack yesterday.,unrelated
+synthetic,I am learning Japanese.,I completed a photography workshop.,unrelated
+synthetic,I prefer working alone.,I also enjoy quiet walks in the evening.,consistent
+synthetic,I have been working at the same company for five years.,I resigned from that company last month.,contradicts
+synthetic,My flight leaves at 8 AM.,"My flight is at 8 PM, not 8 AM.",updates
+synthetic,I am vegetarian and do not eat meat.,I regularly eat chicken for dinner.,contradicts
+synthetic,I have never taken a programming course.,I completed a programming course last year.,contradicts

@@ -1,0 +1,5 @@
+,adaptive,summary,truncation-10,truncation-40
+multi-hop (n=2),0.0,0.5,0.0,0.0
+open-domain (n=1),1.0,1.0,1.0,1.0
+single-hop (n=11),0.636,0.364,0.0,0.455
+temporal (n=6),0.333,0.0,0.167,0.5

@@ -1,0 +1,150 @@
+
+==============================================================================
+1. DATA UNDERSTANDING
+==============================================================================
+Source: LoCoMo benchmark (C:\Users\Tvisha\Downloads\adaptive-memory-chatbot\data\locomo10.json)
+Conversations: 10
+Sessions:      272  (avg 27.2 per conversation)
+Turns:         5882
+Questions:     1986
+
+Variables in the turn table:
+                 dtype  non_null  unique
+conversation_id    str      5882      10
+session            str      5882      32
+session_no       int64      5882      32
+pos_in_session   int64      5882      47
+dia_id             str      5882    1033
+speaker            str      5882      18
+text               str      5882    5872
+has_image         bool      5882       2
+date_raw           str      5882     271
+
+First 3 turns:
+conversation_id   session dia_id  speaker                                                         text
+        conv-26 session_1   D1:1 Caroline                 Hey Mel! Good to see you! How have you been?
+        conv-26 session_1   D1:2  Melanie Hey Caroline! Good to see you! I'm swamped with the kids ...
+        conv-26 session_1   D1:3 Caroline I went to a LGBTQ support group yesterday and it was so p...
+
+==============================================================================
+2. DATA CLEANING AND PREPROCESSING (audit of the raw data)
+==============================================================================
+Missing text values:                0
+Empty / whitespace-only texts:       0
+Texts with stray / double whitespace: 246
+Missing speaker labels:              0
+Duplicate dialogue ids:              0
+Exact duplicate texts (normalized):  13  (0.2%)
+Very short turns (< 4 words):        52  (0.9%)
+Session dates that failed to parse:  0
+Questions with no gold answer:       444  (they belong to the 446 'adversarial' questions, which are excluded from accuracy)
+
+Preprocessing applied: whitespace normalized, empty turns dropped, session dates converted to
+datetimes, text features derived (words, chars, question marks, ...).
+Turns kept after cleaning: 5882 of 5882
+Take-away: LoCoMo itself is already clean; the real 'cleaning' is done by the memory pipeline
+(near-duplicates skipped, small talk filtered, contradictions replaced).
+
+==============================================================================
+3. DESCRIPTIVE STATISTICS
+==============================================================================
+                 count    mean    std  min    25%    50%     75%     max  skew  kurtosis
+words           5882.0   22.74  12.61  1.0  14.00   20.0   29.75   87.00  1.09      1.32
+chars           5882.0  123.51  68.54  2.0  73.00  109.0  161.00  454.00  1.06      1.23
+avg_word_len    5882.0    5.44   0.53  2.0   5.09    5.4    5.75    8.75  0.51      1.65
+sentences       5882.0    2.91   1.20  1.0   2.00    3.0    4.00   10.00  0.77      1.03
+question_marks  5882.0    0.35   0.57  0.0   0.00    0.0    1.00    3.00  1.46      1.44
+exclamations    5882.0    1.03   0.83  0.0   0.00    1.0    2.00    6.00  0.55      0.31
+
+Words per turn by speaker (top 6 speakers by turn count):
+         count  mean  median   std  max
+speaker                                
+Audrey     338  24.1    20.0  13.8   81
+Deborah    341  20.2    17.0  13.3   65
+James      343  21.8    20.0  12.2   87
+John      1017  23.9    21.0  12.7   75
+Jolene     340  19.6    16.0  12.8   75
+Tim        344  21.8    19.0  11.8   81
+
+Question statistics:
+       n_evidence  question_words  answer_words
+count     1986.00         1986.00       1986.00
+mean         1.42           10.18          3.80
+std          1.15            3.14          4.55
+min          0.00            3.00          0.00
+25%          1.00            8.00          1.00
+50%          1.00           10.00          3.00
+75%          1.00           12.00          5.00
+max         19.00           25.00         57.00
+
+Questions per category:
+cat_name
+single-hop     841
+adversarial    446
+temporal       321
+multi-hop      282
+open-domain     96
+
+==============================================================================
+4. UNIVARIATE ANALYSIS
+==============================================================================
+  [chart] eda_1_words_per_turn.png
+  Median 20 words, mean 22.7: the distribution is right-skewed
+  (skew 1.09); most turns are short, a few are long.
+  [chart] eda_2_question_categories.png
+  [chart] eda_3_conversation_sizes.png
+  Conversations have 369 to 689 turns (median 646).
+
+==============================================================================
+5. BIVARIATE ANALYSIS
+==============================================================================
+  [chart] eda_4_bivariate_turns.png
+  Turn length vs position in the whole conversation: r = -0.00 (no trend).
+  Turn length vs position inside a session:          r = -0.33 (turns get shorter as a session goes on).
+  [chart] eda_5_bivariate_questions.png
+  Mean evidence turns per question by category:
+   cat_name
+   multi-hop      3.13
+   open-domain    2.17
+   single-hop     1.06
+   temporal       1.17
+  Multi-hop questions need the most evidence turns, which is why retrieval of several memories
+  at once is the hardest case for the memory system.
+
+==============================================================================
+6. MULTIVARIATE / CORRELATION ANALYSIS
+==============================================================================
+  [chart] eda_6_correlation_heatmap.png
+  Strongest correlations:
+    words vs chars: 0.99
+    turn_in_conv vs days_since_start: 0.93
+    chars vs sentences: 0.73
+    words vs sentences: 0.73
+    sentences vs exclamations: 0.39
+  (words/chars/sentences move together by construction: they measure the same thing, so only one
+  of them needs to be used when modelling.)
+  [chart] eda_7_pairplot.png
+
+==============================================================================
+7. OUTLIER ANALYSIS (IQR rule on words per turn)
+==============================================================================
+  Q1 = 14, Q3 = 30, IQR = 16; upper fence = 53.4 words
+  Outliers by IQR rule: 158 turns (2.7%);  by |z| > 3: 65
+  Longest turns:
+    [conv-47 D6:6] 87 words: Thanks, I'm glad you can feel the atmosphere. I got the idea from a walk with my dogs two ...
+    [conv-50 D20:4] 83 words: Yeah, Dave, I had an amazing drive one summer day. The wind blowing through my hair and th...
+    [conv-43 D13:1] 81 words: Hey John! It's been ages since we last talked. Guess what? Last week I went to a Harry Pot...
+  Share of outliers that include a photo: 30% (vs 21% of all turns)
+  Decision: outliers are genuine long messages (stories, plans), not errors, so they are KEPT; they
+  matter because they contain many facts worth remembering.
+  [chart] eda_8_outliers.png
+
+==============================================================================
+8. KEY FINDINGS
+==============================================================================
+  1. The dataset has 5,882 turns in 10 long conversations (369-689 turns each, over 272 sessions): far too long to paste into a prompt.
+  2. Turn length is right-skewed (median 20 words, mean 22.7, skew 1.09); only 0.9% of turns have fewer than 4 words.
+  3. The raw data is clean (0 missing texts, 0 duplicate ids), so cleaning has to happen at memory time: in conv-26, 65 of the first 100 turns were filtered out as small talk.
+  4. 158 turns (2.7%) are length outliers; they are real long messages and are kept because they carry many facts.
+  5. Multi-hop questions need 3.1 evidence turns on average vs 1.1 for single-hop, which explains why they are the hardest for retrieval-based memory.
+  6. Messages get shorter as a session goes on (words vs position in session r = -0.33), but length is unrelated to where a turn sits in the whole conversation (r = -0.00); length features (words, chars) are almost identical (r = 0.99), so one of them is enough when modelling.

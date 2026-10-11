@@ -1,0 +1,61 @@
+﻿pair_id,old_text,new_text,your_label
+1,"I live in Delhi and work as a data analyst.","I just moved to Mumbai last month.",updates
+2,"I work at Infosys.","I quit Infosys and joined Google last week.",updates
+3,"My exam is on Friday.","The exam got postponed to next Tuesday.",updates
+4,"I'm single.","I got engaged yesterday!",updates
+5,"I drive a Honda Civic.","I sold my Civic and bought a Tesla.",updates
+6,"I'm vegetarian.","I started eating meat again after five years.",updates
+7,"My phone is an iPhone 12.","I switched to a Pixel 8 last week.",updates
+8,"I'm studying computer science at VIT.","I dropped out of VIT and I'm working full time now.",updates
+9,"The team meeting is at 3 PM on Monday.","The team meeting has been moved to 5 PM.",updates
+10,"I'm planning to learn guitar.","I gave up on guitar, I'm learning piano instead.",updates
+11,"My sister lives with me.","My sister moved out to her own apartment.",updates
+12,"I have a cat named Luna.","Luna passed away last night.",updates
+13,"I'm training for a marathon in March.","I tore my ligament, so the marathon is off.",updates
+14,"My budget for the laptop is 60000 rupees.","I raised my laptop budget to 90000 rupees.",updates
+15,"I'm a junior developer.","I got promoted to senior developer.",updates
+16,"I love spicy food.","I can't stand spicy food.",contradicts
+17,"I have never been abroad.","I visited Japan and Korea last year.",contradicts
+18,"I prefer working in the morning.","I'm a night owl and do my best work after midnight.",contradicts
+19,"I don't drink coffee.","I drink three cups of coffee every day.",contradicts
+20,"I'm allergic to peanuts.","I'm not allergic to anything.",contradicts
+21,"I hate cricket.","Cricket is my favourite sport.",contradicts
+22,"My favourite language is Python.","I really dislike Python and avoid it whenever I can.",contradicts
+23,"I'm an only child.","I have two older brothers.",contradicts
+24,"I always take the metro to work.","I never take the metro, I drive everywhere.",contradicts
+25,"I'm right-handed.","I'm left-handed.",contradicts
+26,"I have a dog.","I have a golden retriever named Max.",consistent
+27,"I work as a data analyst.","I mostly use SQL and Python for my analysis work.",consistent
+28,"I live in Delhi.","I live in Delhi near Connaught Place.",consistent
+29,"I like hiking.","I hiked the Kedarkantha trek last winter and loved it.",updates
+30,"I'm studying computer science.","I'm specialising in machine learning this semester.",updates
+31,"My exam is on Friday.","I've started revising for the Friday exam.",consistent
+32,"I enjoy cooking.","I made pasta from scratch yesterday.",updates
+33,"I have a younger brother.","My brother just turned sixteen.",updates
+34,"I want to learn Spanish.","I downloaded Duolingo to practise Spanish.",updates
+35,"I drive a Honda Civic.","My Civic needs a service next month.",consistent
+36,"I'm vegetarian.","I tried a new vegetarian restaurant yesterday.",consistent
+37,"I live in Mumbai.","My friend Arjun lives in Pune.",unrelated
+38,"I work at Google.","My cousin works at Amazon.",unrelated
+39,"I play football on weekends.","My team won the match on Sunday.",updates
+40,"I'm saving up for a new laptop.","I've saved about half of the laptop money.",updates
+41,"I like jazz music.","I like classical music too.",consistent
+42,"I read a lot of science fiction.","I just finished reading Dune.",updates
+43,"I have a meeting on Monday.","I have a dentist appointment on Tuesday.",unrelated
+44,"I'm learning to swim.","I can now swim two lengths of the pool.",updates
+45,"I prefer tea over coffee.","I usually have chai in the evening.",consistent
+46,"I live in Delhi.","My favourite colour is blue.",unrelated
+47,"I have a dog named Max.","I'm preparing for my database systems exam.",unrelated
+48,"I work as a data analyst.","I watched a great movie last night.",unrelated
+49,"I'm vegetarian.","My laptop battery drains too fast.",unrelated
+50,"I play football on weekends.","I need to renew my passport.",unrelated
+51,"My exam is on Friday.","I like listening to podcasts while commuting.",unrelated
+52,"I love spicy food.","I'm applying for an internship at a startup.",unrelated
+53,"I drive a Honda Civic.","I'm thinking about adopting a cat.",unrelated
+54,"I want to learn Spanish.","The wifi in my hostel keeps disconnecting.",unrelated
+55,"I'm a junior developer.","I booked a flight to Goa for December.",unrelated
+56,"I like jazz music.","I have a dentist appointment on Tuesday.",unrelated
+57,"My phone is an iPhone 12.","I'm reading a book about the Roman Empire.",unrelated
+58,"I enjoy cooking.","My sister is getting married in June.",unrelated
+59,"I live in Mumbai.","I should start going to the gym again.",unrelated
+60,"I'm studying computer science.","My favourite biryani place just closed down.",unrelated

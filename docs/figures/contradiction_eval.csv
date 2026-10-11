@@ -1,0 +1,61 @@
+decision,expected,label,new,old,relation,similarity
+replace,replace,updates,I just moved to Mumbai last month.,I live in Delhi and work as a data analyst.,updates,0.503
+replace,replace,updates,I quit Infosys and joined Google last week.,I work at Infosys.,updates,0.715
+replace,replace,updates,The exam got postponed to next Tuesday.,My exam is on Friday.,updates,0.537
+keep,replace,updates,I got engaged yesterday!,I'm single.,(gated out),0.345
+replace,replace,updates,I sold my Civic and bought a Tesla.,I drive a Honda Civic.,updates,0.688
+replace,replace,updates,I started eating meat again after five years.,I'm vegetarian.,updates,0.552
+replace,replace,updates,I switched to a Pixel 8 last week.,My phone is an iPhone 12.,updates,0.404
+replace,replace,updates,I dropped out of VIT and I'm working full time now.,I'm studying computer science at VIT.,updates,0.579
+replace,replace,updates,The team meeting has been moved to 5 PM.,The team meeting is at 3 PM on Monday.,updates,0.805
+replace,replace,updates,"I gave up on guitar, I'm learning piano instead.",I'm planning to learn guitar.,updates,0.657
+replace,replace,updates,My sister moved out to her own apartment.,My sister lives with me.,updates,0.679
+replace,replace,updates,Luna passed away last night.,I have a cat named Luna.,updates,0.549
+replace,replace,updates,"I tore my ligament, so the marathon is off.",I'm training for a marathon in March.,updates,0.662
+replace,replace,updates,I raised my laptop budget to 90000 rupees.,My budget for the laptop is 60000 rupees.,updates,0.794
+replace,replace,updates,I got promoted to senior developer.,I'm a junior developer.,updates,0.646
+replace,replace,contradicts,I can't stand spicy food.,I love spicy food.,contradicts,0.804
+replace,replace,contradicts,I visited Japan and Korea last year.,I have never been abroad.,contradicts,0.452
+replace,replace,contradicts,I'm a night owl and do my best work after midnight.,I prefer working in the morning.,contradicts,0.61
+replace,replace,contradicts,I drink three cups of coffee every day.,I don't drink coffee.,contradicts,0.622
+replace,replace,contradicts,I'm not allergic to anything.,I'm allergic to peanuts.,contradicts,0.76
+replace,replace,contradicts,Cricket is my favourite sport.,I hate cricket.,contradicts,0.715
+replace,replace,contradicts,I really dislike Python and avoid it whenever I can.,My favourite language is Python.,contradicts,0.698
+keep,replace,contradicts,I have two older brothers.,I'm an only child.,(gated out),0.259
+replace,replace,contradicts,"I never take the metro, I drive everywhere.",I always take the metro to work.,contradicts,0.775
+replace,replace,contradicts,I'm left-handed.,I'm right-handed.,contradicts,0.963
+keep,keep,consistent,I have a golden retriever named Max.,I have a dog.,consistent,0.574
+keep,keep,consistent,I mostly use SQL and Python for my analysis work.,I work as a data analyst.,consistent,0.533
+keep,keep,consistent,I live in Delhi near Connaught Place.,I live in Delhi.,consistent,0.901
+keep,keep,consistent,I hiked the Kedarkantha trek last winter and loved it.,I like hiking.,consistent,0.485
+keep,keep,consistent,I'm specialising in machine learning this semester.,I'm studying computer science.,consistent,0.601
+keep,keep,consistent,I've started revising for the Friday exam.,My exam is on Friday.,consistent,0.76
+keep,keep,consistent,I made pasta from scratch yesterday.,I enjoy cooking.,consistent,0.35
+keep,keep,consistent,My brother just turned sixteen.,I have a younger brother.,consistent,0.607
+keep,keep,consistent,I downloaded Duolingo to practise Spanish.,I want to learn Spanish.,consistent,0.633
+keep,keep,consistent,My Civic needs a service next month.,I drive a Honda Civic.,consistent,0.377
+keep,keep,consistent,I tried a new vegetarian restaurant yesterday.,I'm vegetarian.,consistent,0.615
+keep,keep,consistent,My friend Arjun lives in Pune.,I live in Mumbai.,consistent,0.479
+keep,keep,consistent,My cousin works at Amazon.,I work at Google.,consistent,0.44
+keep,keep,consistent,My team won the match on Sunday.,I play football on weekends.,consistent,0.483
+keep,keep,consistent,I've saved about half of the laptop money.,I'm saving up for a new laptop.,consistent,0.772
+keep,keep,consistent,I like classical music too.,I like jazz music.,consistent,0.737
+keep,keep,consistent,I just finished reading Dune.,I read a lot of science fiction.,consistent,0.48
+keep,keep,consistent,I have a dentist appointment on Tuesday.,I have a meeting on Monday.,consistent,0.542
+keep,keep,consistent,I can now swim two lengths of the pool.,I'm learning to swim.,consistent,0.619
+keep,keep,consistent,I usually have chai in the evening.,I prefer tea over coffee.,(gated out),0.311
+keep,keep,unrelated,My favourite colour is blue.,I live in Delhi.,(gated out),0.023
+keep,keep,unrelated,I'm preparing for my database systems exam.,I have a dog named Max.,(gated out),-0.016
+keep,keep,unrelated,I watched a great movie last night.,I work as a data analyst.,(gated out),0.163
+keep,keep,unrelated,My laptop battery drains too fast.,I'm vegetarian.,(gated out),0.036
+keep,keep,unrelated,I need to renew my passport.,I play football on weekends.,(gated out),0.038
+keep,keep,unrelated,I like listening to podcasts while commuting.,My exam is on Friday.,(gated out),0.211
+keep,keep,unrelated,I'm applying for an internship at a startup.,I love spicy food.,(gated out),-0.001
+keep,keep,unrelated,I'm thinking about adopting a cat.,I drive a Honda Civic.,(gated out),0.087
+keep,keep,unrelated,The wifi in my hostel keeps disconnecting.,I want to learn Spanish.,(gated out),-0.003
+keep,keep,unrelated,I booked a flight to Goa for December.,I'm a junior developer.,(gated out),0.076
+keep,keep,unrelated,I have a dentist appointment on Tuesday.,I like jazz music.,(gated out),0.018
+keep,keep,unrelated,I'm reading a book about the Roman Empire.,My phone is an iPhone 12.,(gated out),0.122
+keep,keep,unrelated,My sister is getting married in June.,I enjoy cooking.,(gated out),0.112
+keep,keep,unrelated,I should start going to the gym again.,I live in Mumbai.,(gated out),0.066
+keep,keep,unrelated,My favourite biryani place just closed down.,I'm studying computer science.,(gated out),0.057

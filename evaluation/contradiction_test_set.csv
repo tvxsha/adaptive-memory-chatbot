@@ -1,4 +1,4 @@
-conversation_id,old_text,new_text,label
+﻿conversation_id,old_text,new_text,label
 conv-26,"Yeah, I made it in pottery class yesterday. I love it! Pottery's so relaxing and creative. Have you tried it yet?","I haven't done pottery yet, but I'm game for trying new art. I might try it sometime! Check out this piece I made!",contradicts
 conv-26,"Thanks, Caroline! Painting's a fun way to express my feelings and get creative. It's a great way to relax after a long day.","Thanks, Caroline! I painted it because it was calming. I've done an abstract painting too, take a look! I love how art lets us get our emotions out.",consistent
 conv-26,That photo is stunning! So glad you bonded over our love of nature. Last Friday I went to a council meeting for adoption. It was inspiring and emotional - so many people wanted to create loving homes for children in need. It made me even more determined to adopt.,"Thanks so much, Melanie! It's beautiful! It really brings home how much love's in families - both blood and the ones we choose. I hope to build my own family and put a roof over kids who haven't had that before. For me, adoption is a way of giving back and showing love and acceptance.",consistent
@@ -39,7 +39,7 @@ synthetic,I enjoy painting landscapes.,My favourite programming language is Pyth
 synthetic,The meeting is scheduled for Tuesday.,I bought a new backpack yesterday.,unrelated
 synthetic,I am learning Japanese.,I completed a photography workshop.,unrelated
 synthetic,I prefer working alone.,I also enjoy quiet walks in the evening.,consistent
-synthetic,I have been working at the same company for five years.,I resigned from that company last month.,contradicts
+synthetic,I have been working at the same company for five years.,I resigned from that company last month.,updates
 synthetic,My flight leaves at 8 AM.,"My flight is at 8 PM, not 8 AM.",updates
 synthetic,I am vegetarian and do not eat meat.,I regularly eat chicken for dinner.,contradicts
 synthetic,I have never taken a programming course.,I completed a programming course last year.,contradicts

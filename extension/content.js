@@ -13,10 +13,12 @@
 
 const CAPTURE_ROLES = ["user"];
 const SETTLE_MS = 800; // wait a moment so a message's text is complete
-
+// The "Insert into chat box" button pastes a memory summary that starts with this
+// line. If the user sends it, don't store that summary as a new memory.
+const MEMORY_PROMPT_PREFIX = "Here is what I have told you in earlier conversations.";
 const SITE_SELECTORS = {
-  "chat.openai.com": { messageContainer: "[data-message-author-role]", role: "data-message-author-role" },
-  "chatgpt.com": { messageContainer: "[data-message-author-role]", role: "data-message-author-role" },
+  "chat.openai.com": { messageContainer: '[data-user-message-bubble="true"]', role: null },
+  "chatgpt.com": { messageContainer: '[data-user-message-bubble="true"]', role: null },
   // TODO: fill in real selectors after inspecting claude.ai's DOM
   "claude.ai": { messageContainer: ".TODO-claude-message-selector", role: null },
   // TODO: fill in real selectors after inspecting gemini.google.com's DOM
@@ -64,7 +66,7 @@ function observeNewMessages() {
   }
 
   const seen = new WeakSet();
-
+  const sentTexts = new Set(); // ChatGPT re-renders bubbles; don't send the same text twice per page load
   const scanForNewMessages = () => {
     const nodes = document.querySelectorAll(config.messageContainer);
     nodes.forEach((node) => {
@@ -76,7 +78,13 @@ function observeNewMessages() {
       }
       seen.add(node);
       // Read the text after a short delay, once it has settled.
-      setTimeout(() => sendMessageToBackground(role, node.innerText), SETTLE_MS);
+      setTimeout(() => {
+        const text = (node.innerText || "").trim();
+        if (!text || sentTexts.has(text)) return;
+        if (text.startsWith(MEMORY_PROMPT_PREFIX)) return;
+        sentTexts.add(text);
+        sendMessageToBackground(role, text);
+      }, SETTLE_MS);
     });
   };
 
@@ -90,3 +98,48 @@ function observeNewMessages() {
 }
 
 observeNewMessages();
+// ---- "Insert into chat box" (called from the popup) --------------------------
+function findChatBox() {
+  return (
+    document.querySelector("#prompt-textarea") ||
+    document.querySelector('div[contenteditable="true"]') ||
+    document.querySelector("textarea")
+  );
+}
+
+function insertIntoChatBox(text) {
+  const box = findChatBox();
+  if (!box) return { ok: false, error: "chat box not found" };
+  box.focus();
+
+  if (box.tagName === "TEXTAREA") {
+    const setter = Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype, "value").set;
+    setter.call(box, (box.value ? box.value + "\n" : "") + text);
+    box.dispatchEvent(new Event("input", { bubbles: true }));
+    return { ok: true };
+  }
+
+  // contenteditable (ChatGPT): put the cursor at the end, then insert like typing.
+  const range = document.createRange();
+  range.selectNodeContents(box);
+  range.collapse(false);
+  const sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(range);
+
+  let ok = document.execCommand("insertText", false, text);
+  if (!ok) {
+    // Fallback: simulate a paste.
+    const data = new DataTransfer();
+    data.setData("text/plain", text);
+    ok = box.dispatchEvent(new ClipboardEvent("paste", { clipboardData: data, bubbles: true, cancelable: true }));
+  }
+  const probe = text.slice(0, 20);
+  return (box.innerText || box.value || "").includes(probe) ? { ok: true } : { ok: false, error: "insert did not register" };
+}
+
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message && message.type === "INSERT_TEXT") {
+    sendResponse(insertIntoChatBox(message.text));
+  }
+});

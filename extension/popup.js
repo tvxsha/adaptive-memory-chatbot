@@ -212,7 +212,37 @@ async function copyAsPrompt() {
   const ok = await copyText(formatPrompt(items));
   setStatus(ok ? "Copied. Paste it at the start of a chat in any chatbot." : "Couldn't copy.");
 }
-
+async function insertIntoChat() {
+  const items = await loadMemory();
+  if (!items || items.length === 0) {
+    setStatus("Nothing to insert yet.");
+    return;
+  }
+  const prompt = formatPrompt(items);
+  let inserted = false;
+  let reason = "unknown";
+  try {
+    const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
+    if (tabs[0] && tabs[0].id !== undefined) {
+      const res = await chrome.tabs.sendMessage(tabs[0].id, { type: "INSERT_TEXT", text: prompt });
+      inserted = !!(res && res.ok);
+      if (!inserted) reason = (res && res.error) || "no reply from the page";
+    } else {
+      reason = "no active tab";
+    }
+  } catch (e) {
+    reason = e.message;
+  }
+  if (inserted) {
+    setStatus("Inserted into the chat box. Review it, then press Enter to send.", 6000);
+  } else {
+    const ok = await copyText(prompt);
+    setStatus(
+      (ok ? "Copied instead (press Ctrl+V in the chat box). " : "Couldn't copy. ") + "Reason: " + reason,
+      12000
+    );
+  }
+}
 async function copyJson() {
   const res = await send({ type: "EXPORT", conversationId: conversationId() });
   if (!res.ok) {
@@ -282,6 +312,7 @@ async function init() {
     if (e.key === "Enter") askQuestion();
   });
   $("copy-prompt-btn").addEventListener("click", copyAsPrompt);
+  $("insert-btn").addEventListener("click", insertIntoChat);
   $("export-btn").addEventListener("click", copyJson);
   $("clear-btn").addEventListener("click", clearConversation);
 

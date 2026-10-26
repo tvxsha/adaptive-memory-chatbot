@@ -12,6 +12,11 @@ MEMORY_DB_PATH = os.getenv("MEMORY_DB_PATH", "./data/memory.db")
 # By default casual filler ("recent_chat") is not stored. Set STORE_RECENT_CHAT=1
 # to keep it (at a low importance score, without a contradiction check).
 STORE_RECENT_CHAT = os.getenv("STORE_RECENT_CHAT", "0").lower() in ("1", "true", "yes")
+# Optional learned importance score (see memory_engine/importance_model.py). Off by
+# default. When on and the model file exists, retrieval ranks by
+# similarity + LEARNED_IMPORTANCE_WEIGHT * learned score instead of 0.7 * similarity + 0.3 * score.
+USE_LEARNED_IMPORTANCE = os.getenv("USE_LEARNED_IMPORTANCE", "0").lower() in ("1", "true", "yes")
+LEARNED_IMPORTANCE_WEIGHT = float(os.getenv("LEARNED_IMPORTANCE_WEIGHT", "0.15"))
 # The memory categories described in the project objectives
 CATEGORIES = [
     "fact",

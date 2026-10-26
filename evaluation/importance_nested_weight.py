@@ -23,7 +23,10 @@ sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "evaluation"))
 
 import locomo_utils as lu  # noqa: E402
+from memory_engine.importance_model import TEXT_FEATURES  # noqa: E402
 from train_importance import FEATURES, make_models  # noqa: E402
+
+FEATS = TEXT_FEATURES if "--text-only" in sys.argv else FEATURES
 
 RES = ROOT / "evaluation" / "results"
 GRID = (0.0, 0.05, 0.1, 0.15, 0.2, 0.3, 0.43)
@@ -36,7 +39,7 @@ def main():
     E = np.load(RES / "turn_embeddings.npy")
     from memory_engine.embeddings import embed
     entries = {e["sample_id"]: e for e in lu.load_locomo(str(ROOT / "data" / "locomo10.json"))}
-    X = df[FEATURES].to_numpy(dtype=float)
+    X = df[FEATS].to_numpy(dtype=float)
     y = df["needed"].to_numpy()
     convs = df["conv"].to_numpy()
     names = sorted(set(convs))
@@ -94,7 +97,7 @@ def main():
         print(f"{m}: similarity only {base[:, j].mean():.3f}  learned {nested[:, j].mean():.3f}  "
               f"gain {d.mean():+.3f}  95% CI [{lo:+.3f}, {hi:+.3f}]")
     pc = pd.DataFrame(per_conv, columns=["conv", "questions", "similarity_only", "learned", "chosen_w"]).round(3)
-    pc.to_csv(RES / "importance_nested_by_conv.csv", index=False)
+    pc.to_csv(RES / ("importance_nested_by_conv_text.csv" if "--text-only" in sys.argv else "importance_nested_by_conv.csv"), index=False)
     wins = int((pc.learned > pc.similarity_only).sum())
     print(f"\nLearned beat similarity only in {wins} of {len(pc)} conversations")
     print(pc.to_string(index=False))

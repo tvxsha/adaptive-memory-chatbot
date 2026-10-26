@@ -1,0 +1,7 @@
+model,roc_auc_mean,pr_auc_mean,prec_top20_mean,roc_auc_std,pr_auc_std,prec_top20_std
+Logistic Regression,0.776,0.52,0.54,0.032,0.08,0.102
+Random Forest,0.779,0.509,0.543,0.027,0.078,0.097
+Gradient Boosting,0.785,0.523,0.555,0.026,0.074,0.104
+Hand set bonus,0.514,0.252,0.285,0.013,0.06,0.072
+Word count only,0.752,0.489,0.516,0.032,0.089,0.114
+Random,0.502,0.251,0.236,0.02,0.062,0.07

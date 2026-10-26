@@ -1,6 +1,7 @@
 """Retrieves the memory items most relevant to a new query, so only relevant
 context gets injected instead of the full history.
 """
+from memory_engine import config, importance_model
 from memory_engine.embeddings import embed, cosine_similarity
 
 # Items less similar than this to the query are dropped, even if there are
@@ -26,13 +27,18 @@ def retrieve_relevant(
         return []
 
     query_emb = embed(query)
+    use_learned = config.USE_LEARNED_IMPORTANCE and importance_model.is_available()
     ranked = []
     for item in items:
         similarity = cosine_similarity(query_emb, item["embedding"])
         if similarity < min_similarity:
             continue
-        # Weighted blend — tune these weights once you have eval data.
-        combined = 0.7 * similarity + 0.3 * item["score"]
+        if use_learned:
+            # Learned score (0 to 1). Weight chosen by importance_nested_weight.py.
+            combined = similarity + config.LEARNED_IMPORTANCE_WEIGHT * importance_model.learned_importance(item["text"])
+        else:
+            # Weighted blend — tune these weights once you have eval data.
+            combined = 0.7 * similarity + 0.3 * item["score"]
         ranked.append({**item, "similarity": similarity, "combined": combined})
 
     ranked.sort(key=lambda x: x["combined"], reverse=True)

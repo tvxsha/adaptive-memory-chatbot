@@ -1,0 +1,149 @@
+old_text,new_text,label
+I want to learn Spanish.,I downloaded Duolingo to practise Spanish.,consistent
+That photo is stunning! So glad you bonded over our love of nature. Last Friday I went to a council meeting for adoption. It was inspiring and emotional - so many people wanted to create loving homes for children in need. It made me even more determined to adopt.,"Thanks so much, Melanie! It's beautiful! It really brings home how much love's in families - both blood and the ones we choose. I hope to build my own family and put a roof over kids who haven't had that before. For me, adoption is a way of giving back and showing love and acceptance.",consistent
+My budget is 5000 rupees.,I can spend up to 8000 rupees now.,updates
+I like painting.,My phone battery dies too fast.,unrelated
+I'm working on my thesis proposal.,I submitted my thesis proposal and it was approved.,updates
+I've never been to Japan.,I spent two weeks in Tokyo last spring.,contradicts
+I'm studying computer science.,I'm especially interested in machine learning.,consistent
+I'm an only child.,I have two older brothers.,contradicts
+I play football on weekends.,My team won the match on Sunday.,consistent
+My sister lives in Pune.,I prefer tea to coffee.,unrelated
+"Wow, Caroline! All those colors are incredible and the story it tells is so inspiring.","Wow, Caroline, that's so nice! The colors are so bright and the flowers are so pretty. Art is such a source of joy.",consistent
+I hate cricket.,Cricket is my favourite sport.,contradicts
+I'm vegetarian.,I started eating meat again after five years.,contradicts
+My favourite language is Python.,I really dislike Python and avoid it whenever I can.,contradicts
+My brother is a doctor.,He works in a hospital in Bangalore.,consistent
+I'm a junior developer.,I booked a flight to Goa for December.,unrelated
+I enjoy cooking.,My sister is getting married in June.,unrelated
+I don't drink coffee.,I drink three cups of coffee every day.,contradicts
+I work at a startup.,Our startup builds apps for farmers.,consistent
+I have a meeting tomorrow.,My favourite colour is green.,unrelated
+I am allergic to peanuts.,I can safely eat peanuts.,contradicts
+I use an iPhone.,I switched to a Samsung phone last week.,updates
+I have been working at the same company for five years.,I resigned from that company last month.,updates
+I am training for a 5 km run.,I completed my first 10 km race.,updates
+I prefer tea over coffee.,I usually have chai in the evening.,consistent
+"Thanks, Caroline! We both helped with the painting - it was great bonding over it and chatting about nature. We found these lovely flowers. Appreciating the small things in life, too.","Wow, Caroline, that's so nice! The colors are so bright and the flowers are so pretty. Art is such a source of joy.",consistent
+I like watching cricket.,Did you see the match last night?,consistent
+I'm a junior developer.,I got promoted to senior developer.,updates
+I'm preparing for the GRE.,I took the GRE yesterday and scored 322.,updates
+I have a dog.,The dog is a golden retriever named Max.,consistent
+I'm single.,"I'm engaged now, we got engaged on Sunday.",updates
+"Thanks, Caroline! Painting's a fun way to express my feelings and get creative. It's a great way to relax after a long day.","Thanks, Caroline! I painted it because it was calming. I've done an abstract painting too, take a look! I love how art lets us get our emotions out.",consistent
+"Hey Mel, great to chat with you again! So much has happened since we last spoke - I went to an LGBTQ conference two days ago and it was really special. I got the chance to meet and connect with people who've gone through similar journeys. It was such a welcoming environment and I felt totally accepted.",Hey Mel! A lot's happened since we last chatted - I just joined a new LGBTQ activist group last Tues. I'm meeting so many cool people who are as passionate as I am about rights and community support.,updates
+I like jazz music.,I have a dentist appointment on Tuesday.,unrelated
+The meeting is scheduled for Tuesday.,I bought a new backpack yesterday.,unrelated
+"Thanks, Caroline! Appreciate your kind words. Looking forward to more happy years. Our family and moments make it all worth it.","Thanks, Caroline! I'm really lucky to have my family; they bring so much joy and love.",consistent
+I'm allergic to peanuts.,I'm not allergic to anything.,contradicts
+My appointment is on Monday.,"My appointment is on Thursday, not Monday.",updates
+Thanks Mel! I'm going to a transgender conference this month. I'm so excited to meet other people in the community and learn more about advocacy. It's gonna be great!,"Hey Mel, great to chat with you again! So much has happened since we last spoke - I went to an LGBTQ conference two days ago and it was really special. I got the chance to meet and connect with people who've gone through similar journeys. It was such a welcoming environment and I felt totally accepted. I'm really thankful for this amazing community - it's shown me how important it is to fight for trans rights and spread awareness.",updates
+"Yeah, I painted that lake sunrise last year! It's special to me.","Gonna continue my edu and check out career options, which is pretty exciting!",unrelated
+I have two siblings.,I am an only child.,contradicts
+That photo is stunning! So glad you bonded over our love of nature. Last Friday I went to a council meeting for adoption. It was inspiring and emotional - so many people wanted to create loving homes for children in need.,"Wow, Caroline! All those colors are incredible and the story it tells is so inspiring.",unrelated
+"It was amazing, Caroline. The day was full of love and joy. Everyone we love was there to celebrate us - it was really special.","Hey Caroline! Last night was amazing! We celebrated my daughter's birthday with a concert surrounded by music, joy and the warm summer breeze.",consistent
+I'm studying computer science at VIT.,I dropped out of VIT and I'm working full time now.,updates
+I'm taking the 8 am train tomorrow.,"I changed it, I'll take the 6 am train instead.",updates
+I'm renting a flat near the campus.,I bought a house in the suburbs.,contradicts
+I work from home every day.,"I've never worked from home, I go to the office daily.",contradicts
+I have never travelled outside India.,I visited Singapore last summer.,contradicts
+I have a dog named Max.,I'm preparing for my database systems exam.,unrelated
+I have a car.,I've never learned to drive and don't own a vehicle.,contradicts
+I am learning Japanese.,I completed a photography workshop.,unrelated
+I like hiking.,I hiked the Kedarkantha trek last winter and loved it.,consistent
+I'm training for a marathon in March.,"I tore my ligament, so the marathon is off.",updates
+I have never taken a programming course.,I completed a programming course last year.,contradicts
+"Yeah, Caroline. Totally agree. They're my biggest motivation and support.","Glad you agree, Caroline. Appreciate the support of those close to me. Their encouragement made me who I am.",consistent
+I have an exam next week.,I'm revising for the exam this weekend.,consistent
+I hate horror movies.,"Horror is my favourite genre, I watch one every weekend.",contradicts
+I do not own a car.,I bought a car last week.,updates
+I enjoy painting landscapes.,My favourite programming language is Python.,unrelated
+I am preparing for the Java exam.,I finished my Java exam yesterday.,updates
+I'm learning guitar.,I stopped playing guitar months ago and sold it.,contradicts
+I work at a hospital.,I left my hospital job last month.,updates
+I live in Delhi.,My favourite colour is blue.,unrelated
+I enjoy cooking.,I made pasta from scratch yesterday.,consistent
+I prefer working in the morning.,I'm a night owl and do my best work after midnight.,contradicts
+I like Italian food.,Pasta is my favourite dish.,consistent
+I am vegetarian and do not eat meat.,I regularly eat chicken for dinner.,contradicts
+I work at Infosys.,I quit Infosys and joined Google last week.,updates
+I have a meeting on Monday.,I have a dentist appointment on Tuesday.,unrelated
+I'm saving up for a new laptop.,I've saved about half of the laptop money.,updates
+I have a cat named Luna.,Luna passed away last night.,updates
+I'm learning to swim.,I can now swim two lengths of the pool.,updates
+I drive a Honda Civic.,My Civic needs a service next month.,consistent
+I enjoy hiking.,I go to the hills with friends every few months.,consistent
+I prefer tea over coffee.,"These days, I usually choose coffee instead of tea.",updates
+I'm planning to learn guitar.,"I gave up on guitar, I'm learning piano instead.",updates
+I want to learn Spanish.,The wifi in my hostel keeps disconnecting.,unrelated
+My exam is on Friday.,I like listening to podcasts while commuting.,unrelated
+I play chess online.,I need to renew my passport soon.,unrelated
+"Yeah, I made it in pottery class yesterday. I love it! Pottery's so relaxing and creative. Have you tried it yet?","I haven't done pottery yet, but I'm game for trying new art. I might try it sometime! Check out this piece I made!",contradicts
+My phone is an iPhone 12.,I switched to a Pixel 8 last week.,updates
+I work as a data analyst.,I mostly use SQL and Python for my analysis work.,consistent
+I live in Delhi.,I live in Delhi near Connaught Place.,consistent
+I don't drink coffee at all.,I have three cups of coffee every morning.,contradicts
+My exam is on Friday.,The exam got postponed to next Tuesday.,updates
+My phone has 64 GB of storage.,I upgraded to a phone with 256 GB of storage.,updates
+I play football on weekends.,I need to renew my passport.,unrelated
+I'm allergic to peanuts.,I eat peanut butter sandwiches all the time.,contradicts
+I'm on a diet to lose weight.,I reached my target weight and stopped the diet.,updates
+I love spicy food.,I'm applying for an internship at a startup.,unrelated
+My budget for the laptop is 60000 rupees.,I raised my laptop budget to 90000 rupees.,updates
+"Wow, Caroline! You've gained so much from your own experience. Your passion and hard work to help others is awesome. Keep it up, you're making a big impact!","I'm so happy for you, Caroline. You found your true self and now you're helping others. You're so inspiring!",consistent
+The team meeting is at 3 PM on Monday.,The team meeting has been moved to 5 PM.,updates
+My laptop is slow.,I'm planning a trip to Goa next month.,unrelated
+I'm learning French.,I practise French on an app every night.,consistent
+"Thanks, Melanie! Your kind words mean a lot.","Thanks, Melanie. It means a lot to share this with you.",consistent
+I play football on Saturdays.,I switched to badminton on Saturdays after my knee injury.,updates
+I drink a lot of tea.,I want to buy a new bicycle.,unrelated
+I have a younger brother.,My brother just turned sixteen.,consistent
+I work remotely every day.,I now go to the office every weekday.,contradicts
+I'm a vegetarian.,I had a chicken burger for lunch today.,contradicts
+"Wow, Mel, I'm so stoked for you that art is helping you express yourself and bring you joy! Keep it up!","Thanks, Mel! Art gives me so much joy. It helps me show my feelings and freeze gorgeous moments, like a bouquet of flowers.",consistent
+I drive a Honda Civic.,I'm thinking about adopting a cat.,unrelated
+I'm vegetarian.,I tried a new vegetarian restaurant yesterday.,consistent
+I am studying computer science.,I switched my major to design.,updates
+I live in Mumbai.,I should start going to the gym again.,unrelated
+I love reading.,I just finished a mystery novel.,consistent
+I plan to apply for a master's degree.,I submitted my master's application yesterday.,consistent
+I live in Delhi and work as a data analyst.,I just moved to Mumbai last month.,updates
+"Thanks, Mel! My goal is to give kids a loving home. I'm truly grateful for all the support I've got from friends and mentors. Now the hard work starts to turn my dream into a reality. And here's one of the adoption agencies I'm looking into. It's a lot to take in, but I'm feeling hopeful and optimistic.","Thanks, Melanie! I'm stoked to start this new chapter. It's been a dream to adopt and provide a safe, loving home for kids who need it. Do you have any experience with adoption, or know anyone who's gone through the process?",consistent
+I work at Google.,My cousin works at Amazon.,unrelated
+I am preparing for the Java exam.,I have decided to drop Java and focus on Python instead.,updates
+I'm studying computer science.,I'm specialising in machine learning this semester.,updates
+"Wow, Caroline, that painting is awesome! Those colors are so vivid and the whole thing looks really unified. What inspired you?","Wow, Caroline! This painting is awesome. Love the red and blue. What gave you the idea?",consistent
+I have a dog.,I have a golden retriever named Max.,consistent
+My sister lives in Pune.,I don't have any siblings.,contradicts
+"Thanks, Caroline! I'm excited to see where pottery takes me. Anything coming up you're looking forward to?","Sure thing, Melanie! Can't wait to see your pottery project. I'm happy you found something that makes you happy. Show me when you can!",consistent
+My phone is an iPhone 12.,I'm reading a book about the Roman Empire.,unrelated
+I read a lot of science fiction.,I just finished reading Dune.,consistent
+I'm studying computer science.,My favourite biryani place just closed down.,unrelated
+I prefer working alone.,I also enjoy quiet walks in the evening.,unrelated
+I live in Chennai.,Chennai gets very humid in summer.,consistent
+Hey Caroline! Good to see you! I'm swamped with the kids & work. What's up with you? Anything new?,Hey Caroline! Good to talk to you again. What's up? Anything new since last time?,consistent
+My exam is on Friday.,I've started revising for the Friday exam.,consistent
+I'm 19 years old.,I'm 27 and just started my first job.,contradicts
+I'm vegetarian.,Paneer is my go to protein.,consistent
+I drive a Honda Civic.,I sold my Civic and bought a Tesla.,updates
+I love spicy food.,I can't stand spicy food.,contradicts
+I have never been abroad.,I visited Japan and Korea last year.,contradicts
+I'm single.,I got engaged yesterday!,updates
+I like jazz music.,I like classical music too.,consistent
+I study at VIT.,I watched a great documentary about oceans.,unrelated
+My flight leaves at 8 AM.,"My flight is at 8 PM, not 8 AM.",updates
+My sister lives with me.,My sister moved out to her own apartment.,updates
+I always take the metro to work.,"I never take the metro, I drive everywhere.",contradicts
+I live in Mumbai.,My friend Arjun lives in Pune.,unrelated
+"Wow, Caroline! It really conveys unity and strength - such a gorgeous piece! My kids and I just finished another painting like our last one.","Wow, Caroline, that's so nice! The colors are so bright and the flowers are so pretty. Art is such a source of joy.",consistent
+I'm planning to study medicine.,I got my first job as a software engineer.,contradicts
+I'm right-handed.,I'm left-handed.,contradicts
+I live in Hyderabad.,I'm allergic to dust.,unrelated
+I run every morning.,I ran 5 km this morning.,consistent
+I work as a data analyst.,I watched a great movie last night.,unrelated
+I'm vegetarian.,My laptop battery drains too fast.,unrelated
+I want to start a business.,I'm thinking of opening a small cafe.,consistent
+I'm training for a marathon.,I'm saving money for a new camera.,unrelated
+My meeting is at 3 pm.,The meeting got pushed to 5 pm.,updates
+I'm learning Python.,My mother's birthday is in March.,unrelated
+My flight to Delhi is on Monday.,The airline moved my flight to Wednesday.,updates

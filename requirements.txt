@@ -15,3 +15,4 @@ fastembed>=0.3.0
 scikit-learn>=1.5
 joblib>=1.4
 scipy>=1.13
+datasets>=2.20

@@ -1,0 +1,7 @@
+variant,memories,questions,evidence_stored,all@5,all@10,any@5,any@10
+full system,62,69,0.609,0.406,0.507,0.536,0.638
+learned importance,62,69,0.609,0.478,0.522,0.609,0.652
+no importance score,62,69,0.609,0.449,0.522,0.565,0.652
+no similarity cutoff,62,69,0.609,0.406,0.507,0.536,0.638
+no contradiction handling,68,69,0.696,0.464,0.58,0.594,0.71
+store everything,200,69,1.0,0.507,0.623,0.565,0.71

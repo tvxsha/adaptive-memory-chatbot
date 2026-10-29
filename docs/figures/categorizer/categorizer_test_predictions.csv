@@ -1,0 +1,81 @@
+row_id,text,label,part,predicted,llm
+7,I already know what fate awaits me if I do this!,recent_chat,shared,recent_chat,recent_chat
+12,"Wow, Evan, you look great! How did you manage the change?",recent_chat,shared,recent_chat,recent_chat
+65,"Thank you, John! Take care and see you soon!",recent_chat,shared,recent_chat,recent_chat
+67,"Thanks! Your support and encouragement means a lot. Losing my job was a bummer, but it pushed me to take the plunge and go for my biz dreams. Started to learn all these marketing and analytics tools to push the biz forward today. It's been tricky, but I'm up for the challenge and I'm gonna make this work!",goal,shared,goal,goal
+73,"Thanks, Caroline! Appreciate your help. Got any tips for getting started on it?",recent_chat,shared,completed_task,goal
+81,"True, I'm trying to see it as a chance to explore other ways of staying active and traveling. Maybe it's an opportunity to try something different.",goal,shared,goal,goal
+85,Talking with the group of people who were as stoked as me on tech for change was awesome! It made me think we really can make a difference.,fact,shared,completed_task,recent_chat
+93,"Aww, that's adorable! What's the second one's name?",recent_chat,shared,recent_chat,recent_chat
+147,Thanks! I just really enjoy watching our pets play with one another. Its like a dream come true seeing my dog so happy.,preference,shared,preference,preference
+155,Pets really do make life more enjoyable and bright.,recent_chat,shared,fact,preference
+189,Thanks! Appreciate your support. Always staying filled with self-belief.,recent_chat,shared,recent_chat,recent_chat
+192,"Yeah, Tim! Books really can shift how we think and help us learn totally new things. Have you come across any that made a big impact on you recently?",recent_chat,shared,completed_task,recent_chat
+193,"Hey Joanna, I'm no writer like you, but something pretty awesome happened. Last Monday I got to teach people vegan ice cream recipes on my own cooking show! It was a bit nerve-wracking to put myself out there, but it was a blast. Plus, I picked up a few new recipes!",completed_task,shared,completed_task,fact
+204,"Cool, Sam! Writing is a great way to express yourself. What kind of writing do you enjoy? And about the phone, I recommend trying to update it, it usually works for me!",recent_chat,shared,recent_chat,recent_chat
+222,My colleagues and I went to a convention together last month. We're all passionate about using tech for good in our community. It was great to connect with like-minded folks and swap ideas. It's inspiring to see people united in their goal.,fact,shared,fact,fact
+254,"Lately, I've been playing some different genres like strategy and RPG games instead of my usual shooters. I’m already thinking about making competitions for them too.",preference,shared,goal,goal
+258,Nice one! Setting small goals and tracking progress is a great way to stay motivated - it helps you stay on track and celebrates progress. Anything specific you're working on or upcoming challenges you're pumped about?,recent_chat,shared,goal,recent_chat
+262,"That'd be great, Sam! I'm looking to add more vegetables to my meals. Do you have any recipes for that?",goal,shared,recent_chat,goal
+287,Tomorrow's gonna be an awesome night and I'm not gonna forget a second of it. I put so much into this and I want to savor all the good vibes. Thanks for always having my back. You're the best!,recent_chat,shared,recent_chat,recent_chat
+309,"""The Santa Clause"" is a classic! It's so sweet and really captures the Christmas magic. It's just one of those movies that gets us all feeling festive. This was our tree last year.",preference,shared,preference,preference
+315,I've always wanted to learn Spanish. I just stared with it. It's such a useful language with many personal and professional opportunities!,goal,shared,completed_task,goal
+318,"You're already good at drawing, why did you decide to join a class? And why did you start painting then years ago anyway?",recent_chat,shared,completed_task,decision
+328,That's awesome! Have you seen all the Harry Potter movies? I'm a fan too!,preference,shared,preference,recent_chat
+345,"John, that's such a great idea! It gives the pup a loving home and teaches your kids important values. If you need any help, let me know! I just started volunteering at a local dog shelter once a month.",fact,shared,decision,fact
+346,"That pic is so cute! It would be fun to hang out with a dog, cuddling away. Got me thinking of my old hiking pics and how much I miss exploring nature trails with my family's dog. Ah, the peaceful moments out in nature!",preference,shared,preference,recent_chat
+349,That's awesome! It's gotta be a rush having all these options. Can't wait to see which brands you choose to work with - gonna be great!,recent_chat,shared,goal,recent_chat
+350,For sure! I'd love to do either of those things with you!,recent_chat,shared,recent_chat,preference
+358,"Thanks, Maria! It was quite a journey, but definitely worth it. I graduated last week!",completed_task,shared,completed_task,completed_task
+366,"Thanks, John! This is just a good shot, nothing more. I took a lot of shots yesterday and chose the best one to send to you.",recent_chat,shared,recent_chat,recent_chat
+384,"I painted this with a sense of joy and freedom. The spontaneous strokes and bold colors reflect a playful and liberated mood, embracing the creative process without restraint.",completed_task,shared,preference,recent_chat
+35,"Hey Evan, long time no see! I've started eating healthier - what's new with you? Picked up any new hobbies?",decision,own,recent_chat,recent_chat
+334,You're living the dream and inspiring others too! Your studio will totally change things for lots of folks.,recent_chat,own,goal,recent_chat
+58,"Heard of that series! It's been on my list forever. Thanks for the recommendation, Nate. I'm definitely going to check it out!",recent_chat,own,decision,decision
+246,"I got her last year, she's a great pet. She always cheers me up and brings a sense of peace. Spending time with her is so comforting.",fact,own,fact,preference
+281,For sure! You should go to a writing convention or something sometime! The experience at this convention is unforgetable.,recent_chat,own,completed_task,recent_chat
+391,Wow! It's inspiring how fast they learn and the good time they're having. I bet they'll be creating their own complex projects soon!,recent_chat,own,completed_task,recent_chat
+53,Looks great! What made you pick that spot?,recent_chat,own,decision,recent_chat
+374,"Trust me, NYC is amazing! It's got so much to check out - the culture, food - you won't regret it. It's an adventure you'll never forget!",recent_chat,own,preference,recent_chat
+78,Thanks! Exciting times ahead! I'll keep you updated on which brands I choose. Can't wait to see where this journey leads me. Thanks for your support.,recent_chat,own,goal,recent_chat
+98,"Wow, that sounds like a fulfilling hobby! What kind of transformations have you done so far? How's it going with the current project?",recent_chat,own,completed_task,recent_chat
+161,Hey Joanna! That's cool! I won my first video game tournament last week - so exciting!,completed_task,own,completed_task,fact
+124,Hey Jolene! Good to hear from you! A lot's happened since we talked - last week I got to go to this yoga retreat near my mom's place. It was so cool - I got to hang with nature and really get to know myself. Definitely life-changing! That's how beautiful it was there!,completed_task,own,fact,fact
+412,Thanks! It took a bit of time but I wanted to make the place look like my own style and make my customers feel cozy. I chose furniture that looks great and is comfy too. The chandelier adds a nice glam feel while matching the style of the store.,decision,own,preference,decision
+208,"Yeah, my mom really loved flowers. They always made her so happy. She appreciated the simple things in life.",fact,own,fact,preference
+139,"Hey Caroline! Since we last spoke, I took my kids to a park yesterday. They had fun exploring and playing. It was nice seeing them have a good time outdoors. Time flies, huh? What's new with you?",fact,own,fact,recent_chat
+228,"The tour's been incredible! Performing and connecting with the crowd has been so energizing. Yeah, fame has its own challenges. It's been tough trying to balance everything.",decision,own,goal,recent_chat
+223,"Wow, Caroline! That's great! I just signed up for a pottery class yesterday. It's like therapy for me, letting me express myself and get creative. Have you found any activities that make you feel the same way?",completed_task,own,fact,fact
+379,"I make it with almond flour, coconut oil, chocolate and raspberries. It's my favorite for birthdays and special days.",preference,own,preference,preference
+202,That's a great one! Let me know what you think when your finished!,recent_chat,own,completed_task,recent_chat
+41,"That's awesome you learned a language and handled all those details. Great job, you definitely picked up some great skills! Remember, determination and confidence make any project a success. Good work!",completed_task,own,completed_task,recent_chat
+87,"Thanks, Gina - really appreciate your words and encouragement! Dance has the power to bring us together and create sweet moments. Moments like this remind me why I'm chasing my dream and keep me pushing through any struggles.",recent_chat,own,recent_chat,recent_chat
+214,Thanks! I won't give up on it. What got you into books?,recent_chat,own,decision,recent_chat
+13,"Thanks so much, Melanie! It's beautiful! It really brings home how much love's in families - both blood and the ones we choose. I hope to build my own family and put a roof over kids who haven't had that before. For me, adoption is a way of giving back and showing love and acceptance.",goal,own,fact,goal
+305,"Yeah, it's like a little slice of paradise. I always feel so peaceful and serene when I'm there.",preference,own,preference,preference
+369,You must have been so pumped when it happened! Winning can give us a real confidence boost and makes us keep going with our passions.,recent_chat,own,completed_task,recent_chat
+129,That sounds like so much fun! It's great to see them happy and active.,recent_chat,own,preference,recent_chat
+245,"I have a few game recommendations. Zelda BOTW for Switch is an awesome open-world game. Animal Crossing: New Horizons is really calming and cute. As for my favorite game, it's hard to choose just one!",preference,own,preference,preference
+387,"Hey Joanna, check this out! I won my fourth video game tournament on Friday! It was awesome competing and showing off my skills - and the victory was indescribable. I'm really proud that I can make money doing what I love. This one was online!",completed_task,own,completed_task,fact
+375,Hey John! Long time no talk - hope you're doing well. Guess what? Last week I actually won an online gaming tournament! It was such an exciting experience and it blew my mind when I won. Winning felt so good and it really motivated me to keep improving.,completed_task,own,completed_task,fact
+50,I chose them 'cause they help LGBTQ+ folks with adoption. Their inclusivity and support really spoke to me.,decision,own,decision,decision
+122,"Hey John! Been a while, but hope you're doing well. My Unity strategy game is finally finished—it took loads of time and effort, but I'm really proud. Your support and encouragement made a real difference. Thanks for believing in me!",completed_task,own,completed_task,completed_task
+406,"Sure, Sam. I'm here for you. We gotta stick together, especially now.",recent_chat,own,recent_chat,recent_chat
+156,"Yeah, it's great when you reach a goal and it feels rewarding. It's a reminder that you're going in the right direction, and all the hard work was worth it. What's something you feel proud of recently?",recent_chat,own,completed_task,recent_chat
+42,"Of course, Sam! Painting is a great way to relieve stress and be creative. It gives you the freedom to explore colors and textures and express feelings. I've been doing it for a few years now and it helps me find peace. But unfortunately it won't help you with your weight problem, besides painting I recommend exercising!",fact,own,fact,fact
+157,"I actually have something new, Samantha and I have decided to move in together!",decision,own,completed_task,decision
+238,"Wow John, that's intense! Helping out like that takes guts - it's inspiring to hear about the difference you made.",recent_chat,own,recent_chat,recent_chat
+64,"Hey John! Cool that it's going well - you and your friends look like a great team! I'm busy at the shelter getting ready for a fundraiser next week. Hopefully, I can raise enough to cover basic needs for the homeless.",goal,own,goal,goal
+173,"Yeah, definitely! I have fond memories of working on cars with my dad as a kid. We spent one summer restoring an old car. It was hard work, but seeing the end result and knowing that we did it together was really satisfying.",fact,own,fact,recent_chat
+364,"Thanks for the sympathy, Nate. Nothing was recoverable, but now I have an external drive for backups. I never want to go through this again. So, how have you been? Making anything cool?",completed_task,own,completed_task,fact
+353,"I get it, Jolene. When I'm overloaded, I use a certain method. It helps me figure out what's important and urgent so I'm more organized. Do you know about it?",recent_chat,own,recent_chat,fact
+172,"Hey Nate, long time no see! How have you been? I just got done submitting my recent screenplay to a film contest just to see how others might like it!",completed_task,own,completed_task,completed_task
+385,Do you think she would like it?,recent_chat,own,recent_chat,recent_chat
+400,Yeah! It's my way to de-stress and take a break from life.,recent_chat,own,recent_chat,fact
+102,"Wow, nature can be so beautiful! It reminds me of the film camera I had as a kid, I took plenty of beach pics. Thanks for sharing.",fact,own,preference,recent_chat
+218,"Yeah, that sounds like a good idea. Having goals and someone to exercise with might help. I'll give it a try!",goal,own,goal,decision
+94,Yeah! They really do bring so much into our lives - it's amazing to watch them interact. Here's something I've been taking care of lately. Look at those flowers!,preference,own,preference,recent_chat
+188,"Wow! Impressive you're learning German. I know a bit of it myself and Spanish, it makes travel so much easier. How's it going with your language studies?",fact,own,completed_task,recent_chat
+128,"Yeah, humans and animals have a cool connection. They bring us so much joy and love. I'm blessed to have my furry friends in my life. They're my companions and always make my day better.",preference,own,preference,preference
+282,I'm really excited to try different sushi. It's going to be a great time!,goal,own,recent_chat,preference
+380,"Thanks, Dave! That pic was taken in Tokyo during a concert. Man, the energy was nuts - felt like the whole city came out!",fact,own,recent_chat,fact

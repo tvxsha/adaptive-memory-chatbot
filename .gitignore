@@ -30,3 +30,5 @@ extension/*.zip
 # Generated evaluation output
 evaluation/results/
 evaluation/figures/
+memory_engine/models/*.joblib
+evaluation/results_keep/

@@ -35,21 +35,21 @@ embedding API cost. The language model is Groq `openai/gpt-oss-120b`.
 
 ## Results
 
-Evaluated on LoCoMo (long conversations with questions about them). 57 questions
-from 3 conversations (conv-26, conv-30, conv-41), first 100 turns each.
+Evaluated on LoCoMo (long conversations with questions about them). 77 questions
+from 4 conversations (conv-26, conv-30, conv-41, conv-42), first 100 turns each.
 
 | Method | Judged accuracy | Context tokens per question |
 |---|---|---|
-| **Adaptive memory (ours)** | **0.491** | **273** |
-| Single summary | 0.456 | 557 |
-| Truncation, last 40 turns | 0.246 | 1,845 |
-| Truncation, last 10 turns | 0.105 | 456 |
+| **Adaptive memory (ours)** | 0.494 | **252** |
+| Single summary | **0.532** | 598 |
+| Truncation, last 40 turns | 0.247 | 1,724 |
+| Truncation, last 10 turns | 0.091 | 456 |
 
-- Clearly better than truncation (p < 0.01 against the last 40 turns).
-- Matches the single summary (difference +0.035, p = 0.84, not significant) with
-  about half the context.
-- Weak spot: multi-hop questions (0 of 5). The same model answers and judges, and the
-  sample is small, so treat these as indicative.
+- Clearly better than truncation (p = 0.0013 against the last 40 turns).
+- Statistically tied with the single summary on accuracy (difference -0.04, p = 0.72)
+  while using less than half the context, about 2.2 times more accuracy per 1,000 tokens.
+- Weak spot: multi-hop questions (0.12 against 0.62 for the summary, 8 questions).
+  The same model answers and judges, so treat these as indicative.
 
 ### Trained models
 
@@ -73,7 +73,7 @@ Requirements: Python 3.10 to 3.12, Google Chrome, a free
 [Groq API key](https://console.groq.com/keys).
 
 ```bash
-git clone https://github.com/<your-username>/adaptive-memory-chatbot.git
+git clone https://github.com/tvxsha/adaptive-memory-chatbot.git
 cd adaptive-memory-chatbot
 python -m venv venv
 venv\Scripts\activate          # Mac or Linux: source venv/bin/activate
@@ -152,8 +152,8 @@ The fine-tuned contradiction models are trained in
 
 ## Limits
 
-- Small sample: 57 questions from 3 conversations, so differences from the summary
-  baseline are not statistically significant.
+- Small sample: 77 questions from 4 conversations, so the difference from the summary
+  baseline is not statistically significant either way.
 - The same model answers and judges.
 - Multi-hop questions do not work well yet.
 - The fine-tuned contradiction classifier and the categorizer are evaluation results.
